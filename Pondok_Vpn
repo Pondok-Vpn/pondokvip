@@ -462,7 +462,7 @@ function create_account() {
 function show_backup_menu() {
     clear
     echo -e "${GREEN}╔═══════════════✦ ${YELLOW}BACKUP/RESTORE${GREEN} ✦═══════════════╗${NC}"
-    echo -e "${GREEN}║                                                ${GREEN}║${NC}"
+    echo -e "${GREEN}║                                                 ${GREEN}║${NC}"
     echo -e "${GREEN}║   ${RED}[1]${NC} ${YELLOW}BACKUP DATA                              ${GREEN}║${NC}"
     echo -e "${GREEN}║   ${RED}[2]${NC} ${YELLOW}RESTORE DATA                             ${GREEN}║${NC}"
     echo -e "${GREEN}║   ${RED}[3]${NC} ${YELLOW}AUTO BACKUP                              ${GREEN}║${NC}"

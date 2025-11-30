@@ -2,7 +2,7 @@
 # Zivpn UDP Module Manager
 # This script installs the base Zivpn service and then sets up an advanced management interface.
 # CREATED BY : PONDOK VPN
-# IG : @BENDAKEREP
+# TELEGRAM   : @BENDAKEREP
 # --- UI Definitions ---
 YELLOW='\033[1;33m'
 RED='\033[0;31m'
@@ -383,16 +383,16 @@ function _draw_service_status() {
 
     if [ "$service_status" = "active" ]; then
         status_text="Running"
-        status_color="${LIGHT_GREEN}"
+        status_color="${YELLOW}"
     elif [ "$service_status" = "inactive" ]; then
         status_text="Stopped"
-        status_color="${RED}"
+        status_color="${YELLOW}"
     elif [ "$service_status" = "failed" ]; then
         status_text="Error"
-        status_color="${RED}"
+        status_color="${YELLOW}"
     else
         status_text="Unknown"
-        status_color="${RED}"
+        status_color="${YELLOW}"
     fi
 
     status_output="${YELLOW}Service: ${status_color}${status_text}${NC}"
@@ -471,7 +471,7 @@ function show_backup_menu() {
     echo -e "${MAGENTA}║                                                               ${MAGENTA}║${NC}"
     echo -e "${MAGENTA}╚══════════════════════════════════════════════════╝${NC}"
 
-    read -p " Pondok-Vpn Enter [0-4]: " choice
+    read -p "PONDOK VPN, ENTER [0-4]: " choice
 
     case $choice in
         1) /usr/local/bin/zivpn_helper.sh backup ;;
@@ -491,15 +491,15 @@ function show_menu() {
     echo -e "${MAGENTA}╔══════════════════✦ ${YELLOW}PONDOK VPN${MAGENTA} ✦═══════════════════╗${NC}"
     _draw_info_panel
     _draw_service_status
-    echo -e "${MAGENTA}║                                                                              ║${NC}"
-    echo -e "${MAGENTA}║   ${YELLOW}[1]${NC} ${AQUA}CREATE ACCOUNT            ${MAGENTA}║${NC}"
-    echo -e "${MAGENTA}║   ${YELLOW}[2]${NC} ${AQUA}RENEW ACCOUNT             ${MAGENTA}║${NC}"
-    echo -e "${MAGENTA}║   ${YELLOW}[3]${NC} ${AQUA}DELLETE ACCOUNT           ${MAGENTA}║${NC}"
-    echo -e "${MAGENTA}║   ${YELLOW}[4]${NC} ${AQUA}CHANGE DOMAIN             ${MAGENTA}║${NC}"
-    echo -e "${MAGENTA}║   ${YELLOW}[5]${NC} ${AQUA}LIST ACCOUNT              ${MAGENTA}║${NC}"
-    echo -e "${MAGENTA}║   ${YELLOW}[6]${NC} ${AQUA}BACKUP/RESTORE            ${MAGENTA}║${NC}"
-    echo -e "${MAGENTA}║   ${YELLOW}[0]${NC} ${AQUA}EXIT                      ${MAGENTA}║${NC}"
-    echo -e "${MAGENTA}║                                                                              ║${NC}"
+    echo -e "${MAGENTA}║                                                                   ${MAGENTA}║${NC}"
+    echo -e "${MAGENTA}║   ${YELLOW}[1]${NC} ${AQUA}CREATE ACCOUNT                         ${MAGENTA}║${NC}"
+    echo -e "${MAGENTA}║   ${YELLOW}[2]${NC} ${AQUA}RENEW ACCOUNT                          ${MAGENTA}║${NC}"
+    echo -e "${MAGENTA}║   ${YELLOW}[3]${NC} ${AQUA}DELLETE ACCOUNT                        ${MAGENTA}║${NC}"
+    echo -e "${MAGENTA}║   ${YELLOW}[4]${NC} ${AQUA}CHANGE DOMAIN                          ${MAGENTA}║${NC}"
+    echo -e "${MAGENTA}║   ${YELLOW}[5]${NC} ${AQUA}LIST ACCOUNT                           ${MAGENTA}║${NC}"
+    echo -e "${MAGENTA}║   ${YELLOW}[6]${NC} ${AQUA}BACKUP/RESTORE                         ${MAGENTA}║${NC}"
+    echo -e "${MAGENTA}║   ${YELLOW}[0]${NC} ${AQUA}EXIT                                   ${MAGENTA}║${NC}"
+    echo -e "${MAGENTA}║                                                                   ${MAGENTA}║${NC}"
     echo -e "${MAGENTA}╚════════════════════════════════════════════════════╝${NC}"
 
     read -p "PONDOK VPN, ENTER [0-6]: " choice

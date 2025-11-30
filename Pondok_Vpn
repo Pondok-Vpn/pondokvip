@@ -441,15 +441,15 @@ function setup_auto_backup() {
 
 function create_account() {
     clear
-    echo -e "${MAGENTA}╔════════════════✦ ${AQUA}CREATE ACCOUNT${MAGENTA} ✦════════════════╗${NC}"
-    echo -e "${MAGENTA}║                                                                          ║${NC}"
-    echo -e "${MAGENTA}║   ${RED}[1]${NC} ${GREEN}CREATE ZIVPN                                  ${MAGENTA}║${NC}"
-    echo -e "${MAGENTA}║   ${RED}[2]${NC} ${GREEN}CREATE TRIA                                  ${MAGENTA}║${NC}"
-    echo -e "${MAGENTA}║   ${RED}[0]${NC} ${GREEN}BACK TO MENU                                  ${MAGENTA}║${NC}"
-    echo -e "${MAGENTA}║                                                             ║${NC}"
+    echo -e "${MAGENTA}╔════════════════✦ ${YELLOW}CREATE ACCOUNT${MAGENTA} ✦════════════════╗${NC}"
+    echo -e "${MAGENTA}║                                                                  ${MAGENTA}║${NC}"
+    echo -e "${MAGENTA}║   ${YELLOW}[1]${NC} ${AQUA}CREATE ZIVPN                          ${MAGENTA}║${NC}"
+    echo -e "${MAGENTA}║   ${YELLOW}[2]${NC} ${AQUA}CREATE TRIA                           ${MAGENTA}║${NC}"
+    echo -e "${MAGENTA}║   ${YELLOW}[0]${NC} ${AQUA}BACK TO MENU                          ${MAGENTA}║${NC}"
+    echo -e "${MAGENTA}║                                                                  ${MAGENTA}║${NC}"
     echo -e "${MAGENTA}╚════════════════════════════════════════════════════╝${NC}"
 
-    read -p "Enter your choice [0-2]: " choice
+    read -p "PONDOK VPN, ENTER [0-2]: " choice
 
     case $choice in
         1) create_manual_account ;;
@@ -462,13 +462,13 @@ function create_account() {
 function show_backup_menu() {
     clear
     echo -e "${MAGENTA}╔═══════════════✦ ${YELLOW}BACKUP/RESTORE${MAGENTA} ✦═══════════════╗${NC}"
-    echo -e "${MAGENTA}║                                                  ║${NC}"
-    echo -e "${MAGENTA}║   ${RED}[1]${NC} ${GREEN}BACKUP DATA                                 ${BLUE_VIOLET}║${NC}"
-    echo -e "${MAGENTA}║   ${RED}[2]${NC} ${GREEN}RESTORE DATA                                ${BLUE_VIOLET}║${NC}"
-    echo -e "${MAGENTA}║   ${RED}[3]${NC} ${GREEN}AUTO BACKUP                                 ${BLUE_VIOLET}║${NC}"
-    echo -e "${MAGENTA}║   ${RED}[4]${NC} ${GREEN}ATUR ULANG BOT TELEGRAM              ${BLUE_VIOLET}║${NC}"
-    echo -e "${MAGENTA}║   ${RED}[0]${NC} ${GREEN}KEMBALI KEMENU                           ${BLUE_VIOLET}║${NC}"
-    echo -e "${MAGENTA}║                                                  ║${NC}"
+    echo -e "${MAGENTA}║                                                               ${MAGENTA}║${NC}"
+    echo -e "${MAGENTA}║   ${YELLOW}[1]${NC} ${AQUA}BACKUP DATA                        ${MAGENTA}║${NC}"
+    echo -e "${MAGENTA}║   ${YELLOW}[2]${NC} ${AQUA}RESTORE DATA                       ${MAGENTA}║${NC}"
+    echo -e "${MAGENTA}║   ${YELLOW}[3]${NC} ${AQUA}AUTO BACKUP                        ${MAGENTA}║${NC}"
+    echo -e "${MAGENTA}║   ${UELLOW}[4]${NC} ${AQUA}ATUR ULANG BOT TELEGRAM            ${MAGENTA}║${NC}"
+    echo -e "${MAGENTA}║   ${YELLOW}[0]${NC} ${AQUA}KEMBALI KEMENU                     ${MAGENTA}║${NC}"
+    echo -e "${MAGENTA}║                                                               ${MAGENTA}║${NC}"
     echo -e "${MAGENTA}╚══════════════════════════════════════════════════╝${NC}"
 
     read -p " Pondok-Vpn Enter [0-4]: " choice
@@ -492,17 +492,17 @@ function show_menu() {
     _draw_info_panel
     _draw_service_status
     echo -e "${MAGENTA}║                                                                              ║${NC}"
-    echo -e "${MAGENTA}║   ${GREEN}[${RED}1${GREEN}]${NC} ${GREEN}CREATE ACCOUNT            ${MAGENTA}║${NC}"
-    echo -e "${MAGENTA}║   ${GREEN}[${RED}2${GREEN}]${NC} ${GREEN}RENEW ACCOUNT             ${MAGENTA}║${NC}"
-    echo -e "${MAGENTA}║   ${GREEN}[${RED}3${GREEN}]${NC} ${GREEN}DELLETE ACCOUNT           ${MAGENTA}║${NC}"
-    echo -e "${MAGENTA}║   ${GREEN}[${RED}4${GREEN}]${NC} ${GREEN}CHANGE DOMAIN             ${MAGENTA}║${NC}"
-    echo -e "${MAGENTA}║   ${GREEN}[${RED}5${GREEN}]${NC} ${GREEN}LIST ACCOUNT              ${MAGENTA}║${NC}"
-    echo -e "${MAGENTA}║   ${GREEN}[${RED}6${GREEN}]${NC} ${GREEN}BACKUP/RESTORE            ${MAGENTA}║${NC}"
-    echo -e "${MAGENTA}║   ${GREEN}[${RED}0${GREEN}]${NC} ${GREEN}EXIT                      ${MAGENTA}║${NC}"
+    echo -e "${MAGENTA}║   ${YELLOW}[1]${NC} ${AQUA}CREATE ACCOUNT            ${MAGENTA}║${NC}"
+    echo -e "${MAGENTA}║   ${YELLOW}[2]${NC} ${AQUA}RENEW ACCOUNT             ${MAGENTA}║${NC}"
+    echo -e "${MAGENTA}║   ${YELLOW}[3]${NC} ${AQUA}DELLETE ACCOUNT           ${MAGENTA}║${NC}"
+    echo -e "${MAGENTA}║   ${YELLOW}[4]${NC} ${AQUA}CHANGE DOMAIN             ${MAGENTA}║${NC}"
+    echo -e "${MAGENTA}║   ${YELLOW}[5]${NC} ${AQUA}LIST ACCOUNT              ${MAGENTA}║${NC}"
+    echo -e "${MAGENTA}║   ${YELLOW}[6]${NC} ${AQUA}BACKUP/RESTORE            ${MAGENTA}║${NC}"
+    echo -e "${MAGENTA}║   ${YELLOW}[0]${NC} ${AQUA}EXIT                      ${MAGENTA}║${NC}"
     echo -e "${MAGENTA}║                                                                              ║${NC}"
     echo -e "${MAGENTA}╚════════════════════════════════════════════════════╝${NC}"
 
-    read -p "Enter your choice [0-6]: " choice
+    read -p "PONDOK VPN, ENTER [0-6]: " choice
 
     case $choice in
         1) create_account ;;

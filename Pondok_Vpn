@@ -370,10 +370,10 @@ function _draw_info_panel() {
     fi
 
     # --- Print Panel ---
-    printf "  ${RED}%-7s${BOLD_WHITE}%-18s ${RED}%-6s${BOLD_WHITE}%-19s${NC}\n" "OS:" "${os_info}" "ISP:" "${isp_info}"
-    printf "  ${RED}%-7s${BOLD_WHITE}%-18s ${RED}%-6s${BOLD_WHITE}%-19s${NC}\n" "IP:" "${ip_info}" "Host:" "${host_info}"
-    printf "  ${RED}%-7s${BOLD_WHITE}%-18s ${RED}%-6s${BOLD_WHITE}%-19s${NC}\n" "Client:" "${client_name}" "EXP:" "${license_exp}"
-    printf "  ${RED}%-7s${BOLD_WHITE}%-18s ${RED}%-6s${BOLD_WHITE}%-19s${NC}\n" "Today:" "${bw_today}" "Month:" "${bw_month}"
+    printf "  ${AQUA}%-7s${YELLOW}%-18s ${AQUA}%-6s${YELLOW}%-19s${NC}\n" "OS:" "${os_info}" "ISP:" "${isp_info}"
+    printf "  ${AQUA}%-7s${YELLOW}%-18s ${AQUA}%-6s${YELLOW}%-19s${NC}\n" "IP:" "${ip_info}" "Host:" "${host_info}"
+    printf "  ${AQUA}%-7s${YELLOW}%-18s ${AQUA}%-6s${YELLOW}%-19s${NC}\n" "Client:" "${client_name}" "EXP:" "${license_exp}"
+    printf "  ${AQUA}%-7s${YELLOW}%-18s ${AQUA}%-6s${YELLOW}%-19s${NC}\n" "Today:" "${bw_today}" "Month:" "${bw_month}"
 }
 
 function _draw_service_status() {
@@ -395,7 +395,7 @@ function _draw_service_status() {
         status_color="${RED}"
     fi
 
-    status_output="${CYAN}Service: ${status_color}${status_text}${NC}"
+    status_output="${YELLOW}Service: ${status_color}${status_text}${NC}"
 
     # Center the text
     local menu_width=55 # Total width of the menu box including borders
@@ -407,9 +407,9 @@ function _draw_service_status() {
     local padding_left=$((padding_total / 2))
     local padding_right=$((padding_total - padding_left))
 
-    echo -e "${BLUE_VIOLET}╠════════════════════════════════════════════════════╣${NC}"
+    echo -e "${MAGENTA}╠════════════════════════════════════════════════════╣${NC}"
     echo -e "$(printf '%*s' $padding_left)${status_output}$(printf '%*s' $padding_right)"
-    echo -e "${BLUE_VIOLET}╠════════════════════════════════════════════════════╣${NC}"
+    echo -e "${MAGENTA}╠════════════════════════════════════════════════════╣${NC}"
 }
 
 function setup_auto_backup() {
@@ -441,13 +441,13 @@ function setup_auto_backup() {
 
 function create_account() {
     clear
-    echo -e "${BLUE_VIOLET}╔════════════════✦ ${RED}CREATE ACCOUNT${BLUE_VIOLET} ✦════════════════╗${NC}"
-    echo -e "${BLUE_VIOLET}║                                                    ║${NC}"
-    echo -e "${BLUE_VIOLET}║   ${RED}[1]${NC} ${GREEN}CREATE ZIVPN                                  ${YELLOW}║${NC}"
-    echo -e "${BLUE_VIOLET}║   ${RED}[2]${NC} ${GREEN}CREATE TRIA                                   ${YELLOW}║${NC}"
-    echo -e "${BLUE_VIOLET}║   ${RED}[0]${NC} ${GREEN}BACK TO MENU                             ${YELLOW}║${NC}"
-    echo -e "${BLUE_VIOLET}║                                                    ║${NC}"
-    echo -e "${BLUE_VIOLET}╚════════════════════════════════════════════════════╝${NC}"
+    echo -e "${MAGENTA}╔════════════════✦ ${AQUA}CREATE ACCOUNT${MAGENTA} ✦════════════════╗${NC}"
+    echo -e "${MAGENTA}║                                                                          ║${NC}"
+    echo -e "${MAGENTA}║   ${RED}[1]${NC} ${GREEN}CREATE ZIVPN                                  ${MAGENTA}║${NC}"
+    echo -e "${MAGENTA}║   ${RED}[2]${NC} ${GREEN}CREATE TRIA                                  ${MAGENTA}║${NC}"
+    echo -e "${MAGENTA}║   ${RED}[0]${NC} ${GREEN}BACK TO MENU                                  ${MAGENTA}║${NC}"
+    echo -e "${MAGENTA}║                                                             ║${NC}"
+    echo -e "${MAGENTA}╚════════════════════════════════════════════════════╝${NC}"
 
     read -p "Enter your choice [0-2]: " choice
 
@@ -461,15 +461,15 @@ function create_account() {
 
 function show_backup_menu() {
     clear
-    echo -e "${BLUE_VIOLET}╔═══════════════✦ ${RED}BACKUP/RESTORE${BLUE_VIOLET} ✦═══════════════╗${NC}"
-    echo -e "${BLUE_VIOLET}║                                                  ║${NC}"
-    echo -e "${BLUE_VIOLET}║   ${RED}[1]${NC} ${GREEN}BACKUP DATA                                 ${BLUE_VIOLET}║${NC}"
-    echo -e "${BLUE_VIOLET}║   ${RED}[2]${NC} ${GREEN}RESTORE DATA                                ${BLUE_VIOLET}║${NC}"
-    echo -e "${BLUE_VIOLET}║   ${RED}[3]${NC} ${GREEN}AUTO BACKUP                                 ${BLUE_VIOLET}║${NC}"
-    echo -e "${BLUE_VIOLET}║   ${RED}[4]${NC} ${GREEN}ATUR ULANG BOT TELEGRAM              ${BLUE_VIOLET}║${NC}"
-    echo -e "${BLUE_VIOLET}║   ${RED}[0]${NC} ${GREEN}KEMBALI KEMENU                           ${BLUE_VIOLET}║${NC}"
-    echo -e "${BLUE_VIOLET}║                                                  ║${NC}"
-    echo -e "${BLUE_VIOLET}╚══════════════════════════════════════════════════╝${NC}"
+    echo -e "${MAGENTA}╔═══════════════✦ ${YELLOW}BACKUP/RESTORE${MAGENTA} ✦═══════════════╗${NC}"
+    echo -e "${MAGENTA}║                                                  ║${NC}"
+    echo -e "${MAGENTA}║   ${RED}[1]${NC} ${GREEN}BACKUP DATA                                 ${BLUE_VIOLET}║${NC}"
+    echo -e "${MAGENTA}║   ${RED}[2]${NC} ${GREEN}RESTORE DATA                                ${BLUE_VIOLET}║${NC}"
+    echo -e "${MAGENTA}║   ${RED}[3]${NC} ${GREEN}AUTO BACKUP                                 ${BLUE_VIOLET}║${NC}"
+    echo -e "${MAGENTA}║   ${RED}[4]${NC} ${GREEN}ATUR ULANG BOT TELEGRAM              ${BLUE_VIOLET}║${NC}"
+    echo -e "${MAGENTA}║   ${RED}[0]${NC} ${GREEN}KEMBALI KEMENU                           ${BLUE_VIOLET}║${NC}"
+    echo -e "${MAGENTA}║                                                  ║${NC}"
+    echo -e "${MAGENTA}╚══════════════════════════════════════════════════╝${NC}"
 
     read -p " Pondok-Vpn Enter [0-4]: " choice
 
@@ -488,19 +488,19 @@ function show_menu() {
     clear
     figlet "UDP ZIVPN" | lolcat
 
-    echo -e "${BLUE_VIOLET}╔══════════════════✦ ${YELLOW}PONDOK VPN${BLUE_VIOLET} ✦═══════════════════╗${NC}"
+    echo -e "${MAGENTA}╔══════════════════✦ ${YELLOW}PONDOK VPN${MAGENTA} ✦═══════════════════╗${NC}"
     _draw_info_panel
     _draw_service_status
-    echo -e "${BLUE_VIOLET}║                                                    ║${NC}"
-    echo -e "${BLUE_VIOLET}║   ${GREEN}[${RED}1${GREEN}]${NC} ${GREEN}CREATE ACCOUNT                                ${BLUE_VIOLET}║${NC}"
-    echo -e "${BLUE_VIOLET}║   ${GREEN}[${RED}2${GREEN}]${NC} ${GREEN}RENEW ACCOUNT                                 ${BLUE_VIOLET}║${NC}"
-    echo -e "${BLUE_VIOLET}║   ${GREEN}[${RED}3${GREEN}]${NC} ${GREEN}DELLETE ACCOUNT                                ${BLUE_VIOLET}║${NC}"
-    echo -e "${BLUE_VIOLET}║   ${GREEN}[${RED}4${GREEN}]${NC} ${GREEN}CHANGE DOMAIN                                 ${BLUE_VIOLET}║${NC}"
-    echo -e "${BLUE_VIOLET}║   ${GREEN}[${RED}5${GREEN}]${NC} ${GREEN}LIST ACCOUNT                                 ${BLUE_VIOLET}║${NC}"
-    echo -e "${BLUE_VIOLET}║   ${GREEN}[${RED}6${GREEN}]${NC} ${GREEN}BACKUP/RESTORE                                ${BLUE_VIOLET}║${NC}"
-    echo -e "${BLUE_VIOLET}║   ${GREEN}[${RED}0${GREEN}]${NC} ${GREEN}EXIT                                          ${BLUE_VIOLET}║${NC}"
-    echo -e "${BLUE_VIOLET}║                                                    ║${NC}"
-    echo -e "${BLUE_VIOLET}╚════════════════════════════════════════════════════╝${NC}"
+    echo -e "${MAGENTA}║                                                                              ║${NC}"
+    echo -e "${MAGENTA}║   ${GREEN}[${RED}1${GREEN}]${NC} ${GREEN}CREATE ACCOUNT            ${MAGENTA}║${NC}"
+    echo -e "${MAGENTA}║   ${GREEN}[${RED}2${GREEN}]${NC} ${GREEN}RENEW ACCOUNT             ${MAGENTA}║${NC}"
+    echo -e "${MAGENTA}║   ${GREEN}[${RED}3${GREEN}]${NC} ${GREEN}DELLETE ACCOUNT           ${MAGENTA}║${NC}"
+    echo -e "${MAGENTA}║   ${GREEN}[${RED}4${GREEN}]${NC} ${GREEN}CHANGE DOMAIN             ${MAGENTA}║${NC}"
+    echo -e "${MAGENTA}║   ${GREEN}[${RED}5${GREEN}]${NC} ${GREEN}LIST ACCOUNT              ${MAGENTA}║${NC}"
+    echo -e "${MAGENTA}║   ${GREEN}[${RED}6${GREEN}]${NC} ${GREEN}BACKUP/RESTORE            ${MAGENTA}║${NC}"
+    echo -e "${MAGENTA}║   ${GREEN}[${RED}0${GREEN}]${NC} ${GREEN}EXIT                      ${MAGENTA}║${NC}"
+    echo -e "${MAGENTA}║                                                                              ║${NC}"
+    echo -e "${MAGENTA}╚════════════════════════════════════════════════════╝${NC}"
 
     read -p "Enter your choice [0-6]: " choice
 

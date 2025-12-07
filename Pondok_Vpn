@@ -444,7 +444,7 @@ function create_account() {
     echo -e "${GREEN}╔════════════════✦ ${YELLOW}CREATE ACCOUNT${GREEN} ✦════════════════╗${NC}"
     echo -e "${GREEN}║                                                   ${GREEN}║${NC}"
     echo -e "${GREEN}║   ${RED}[1]${NC} ${YELLOW}CREATE ZIVPN                                ${GREEN}║${NC}"
-    echo -e "${GREEN}║   ${RED}[2]${NC} ${YELLOW}CREATE TRIA                                 ${GREEN}║${NC}"
+    echo -e "${GREEN}║   ${RED}[2]${NC} ${YELLOW}CREATE TRIAL                                ${GREEN}║${NC}"
     echo -e "${GREEN}║   ${RED}[0]${NC} ${YELLOW}BACK TO MENU                                ${GREEN}║${NC}"
     echo -e "${GREEN}║                                                   ${GREEN}║${NC}"
     echo -e "${GREEN}╚═══════════════════════════════════════════════════╝${NC}"

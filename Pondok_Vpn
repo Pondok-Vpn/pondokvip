@@ -498,12 +498,12 @@ function show_menu() {
     echo -e "${GREEN}║   ${YELLOW}[${RED}4${YELLOW}]${NC} ${YELLOW}CHANGE DOMAIN                                ${GREEN}║${NC}"
     echo -e "${GREEN}║   ${YELLOW}[${RED}5${YELLOW}]${NC} ${YELLOW}LIST ACCOUNT                                 ${GREEN}║${NC}"
     echo -e "${GREEN}║   ${YELLOW}[${RED}6${YELLOW}]${NC} ${YELLOW}BACKUP/RESTORE                               ${GREEN}║${NC}"
-    echo -e "${GREEN}║   ${YELLOW}[${RED}7${YELLOW}]${NC} ${YELLOW}MENU BOT TELE                               ${GREEN}║${NC}"
+    echo -e "${GREEN}║   ${YELLOW}[${RED}7${YELLOW}]${NC} ${YELLOW}MENU BOT TELE                                ${GREEN}║${NC}"
     echo -e "${GREEN}║   ${YELLOW}[${RED}0${YELLOW}]${NC} ${YELLOW}EXIT                                         ${GREEN}║${NC}"
     echo -e "${GREEN}║                                                    ${GREEN}║${NC}"
     echo -e "${GREEN}╚════════════════════════════════════════════════════╝${NC}"
 
-    read -p "PONDOK VPN, ENTER [0-6]: " choice
+    read -p "PONDOK VPN, ENTER [0-7]: " choice
 
     case $choice in
         1) create_account ;;

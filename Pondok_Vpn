@@ -492,13 +492,13 @@ function show_menu() {
     _draw_info_panel
     _draw_service_status
     echo -e "${GREEN}║                                                    ${GREEN}║${NC}"
-    echo -e "${GREEN}║   ${RED}[1]${NC} ${YELLOW}CREATE ACCOUNT                               ${GREEN}║${NC}"
-    echo -e "${GREEN}║   ${RED}[2]${NC} ${YELLOW}RENEW ACCOUNT                                ${GREEN}║${NC}"
-    echo -e "${GREEN}║   ${RED}[3]${NC} ${YELLOW}DELLETE ACCOUNT                              ${GREEN}║${NC}"
-    echo -e "${GREEN}║   ${RED}[4]${NC} ${YELLOW}CHANGE DOMAIN                                ${GREEN}║${NC}"
-    echo -e "${GREEN}║   ${RED}[5]${NC} ${YELLOW}LIST ACCOUNT                                 ${GREEN}║${NC}"
-    echo -e "${GREEN}║   ${RED}[6]${NC} ${YELLOW}BACKUP/RESTORE                               ${GREEN}║${NC}"
-    echo -e "${GREEN}║   ${RED}[0]${NC} ${YELLOW}EXIT                                         ${GREEN}║${NC}"
+    echo -e "${GREEN}║   ${YELLOW}[${RED}1]${NC} ${YELLOW}CREATE ACCOUNT                               ${GREEN}║${NC}"
+    echo -e "${GREEN}║   ${YELLOW}[${RED}2]${NC} ${YELLOW}RENEW ACCOUNT                                ${GREEN}║${NC}"
+    echo -e "${GREEN}║   ${YELLOW}[${RED}3]${NC} ${YELLOW}DELLETE ACCOUNT                              ${GREEN}║${NC}"
+    echo -e "${GREEN}║   ${YELLOW}[${RED}4]${NC} ${YELLOW}CHANGE DOMAIN                                ${GREEN}║${NC}"
+    echo -e "${GREEN}║   ${YELLOW}[${RED}5]${NC} ${YELLOW}LIST ACCOUNT                                 ${GREEN}║${NC}"
+    echo -e "${GREEN}║   ${YELLOW}[${RED}6]${NC} ${YELLOW}BACKUP/RESTORE                               ${GREEN}║${NC}"
+    echo -e "${GREEN}║   ${YELLOW}[${RED}0]${NC} ${YELLOW}EXIT                                         ${GREEN}║${NC}"
     echo -e "${GREEN}║                                                    ${GREEN}║${NC}"
     echo -e "${GREEN}╚════════════════════════════════════════════════════╝${NC}"
 

@@ -498,6 +498,7 @@ function show_menu() {
     echo -e "${GREEN}║   ${YELLOW}[${RED}4${YELLOW}]${NC} ${YELLOW}CHANGE DOMAIN                                ${GREEN}║${NC}"
     echo -e "${GREEN}║   ${YELLOW}[${RED}5${YELLOW}]${NC} ${YELLOW}LIST ACCOUNT                                 ${GREEN}║${NC}"
     echo -e "${GREEN}║   ${YELLOW}[${RED}6${YELLOW}]${NC} ${YELLOW}BACKUP/RESTORE                               ${GREEN}║${NC}"
+    echo -e "${GREEN}║   ${YELLOW}[${RED}7${YELLOW}]${NC} ${YELLOW}MENU BOT TELE                               ${GREEN}║${NC}"
     echo -e "${GREEN}║   ${YELLOW}[${RED}0${YELLOW}]${NC} ${YELLOW}EXIT                                         ${GREEN}║${NC}"
     echo -e "${GREEN}║                                                    ${GREEN}║${NC}"
     echo -e "${GREEN}╚════════════════════════════════════════════════════╝${NC}"
@@ -511,6 +512,7 @@ function show_menu() {
         4) change_domain ;;
         5) list_accounts ;;
         6) show_backup_menu ;;
+        7) source /etc/pondokvpn/bot_menu/menu_bot.sh && menu_bot ;;
         0) exit 0 ;;
         *) echo "Invalid option. Please try again." ;;
     esac

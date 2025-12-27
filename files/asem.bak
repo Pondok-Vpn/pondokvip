@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# Repo GitHub (backup)
+REPO="https://raw.githubusercontent.com/Pondok-Vpn/pondokvip/main/"
+
+# Hanya backup file lama, tidak menimpa
+if [ -f /etc/default/dropbear ]; then
+    cp /etc/default/dropbear /etc/default/dropbear.bak
+    echo "Backup of existing Dropbear config created at /etc/default/dropbear.bak"
+else
+    echo "No existing Dropbear config found to backup."
+fi

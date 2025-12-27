@@ -47,9 +47,7 @@ DAFTAR XRAY : bash xray.sh list
 CONTOH VERSI : bash xray.sh v25.1.30
 reboot
 ```
-```
 ### Author
-```
 ```
 PONDOK VPN TUNNEL:
 

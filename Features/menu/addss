@@ -50,7 +50,7 @@ fi
 
 tls="$(cat ~/log-install.txt | grep -w "Sodosok WS/GRPC" | cut -d: -f2|sed 's/ //g')"
 until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
-echo -e "\033[1;93m┌──────────────────────────────────────────┐\033[0m"
+echo -e "\033[1;93m┌──────────────────────────────────────────┐\033{0m"
   echo -e "       CREATE SHADOWSOCKS ACCOUNT        "
   echo -e "\033[1;93m└──────────────────────────────────────────┘\033[0m"
 
@@ -407,13 +407,15 @@ Terimakasih sudah order 🙏
 💸Nominal : 10K
 📆Tanggal : $tnggl
 💳Payment : DANA
+
+by PONDOKVPN
 "
 curl -s -X POST $URL --data-urlencode "chat_id=$CHATID" --data-urlencode "text=$TEXT" >/dev/null
 
 clear
 echo -e "\033[1;93m◇━━━━━━━━━━━━━━━━━◇\033[0m"
 echo -e " CREATE SHADOWSOCKS         "
-echo -e "\033[1;93m◇━━━━━━━━━━━━━━━━━◇\033[0m"
+echo -e "\033{1;93m◇━━━━━━━━━━━━━━━━━◇\033[0m"
 echo -e "Remarks     : ${user}"
 echo -e "Domain      : ${domain}"
 echo -e "User Quota  : ${Quota} GB"
@@ -429,9 +431,10 @@ echo -e "\033[1;93m◇━━━━━━━━━━━━━━━━━◇\033
 echo -e "Link WS None TLS : ${nonsslinkws}"
 echo -e "\033[1;93m◇━━━━━━━━━━━━━━━━━◇\033[0m"
 echo -e "Link GRPC : ${sslinkgrpc}"
-echo -e "\033[1;93m◇━━━━━━━━━━━━━━━━━◇\033[0m"
+echo -e "\033{1;93m◇━━━━━━━━━━━━━━━━━◇\033[0m"
 echo -e "Aktif Selama   : $masaaktif Hari"
 echo -e "Dibuat Pada    : $tnggl"
 echo -e "Berakhir Pada  : $expe"
 echo -e "\033[1;93m◇━━━━━━━━━━━━━━━━━◇\033[0m"
+echo -e "by PONDOKVPN"
 echo ""

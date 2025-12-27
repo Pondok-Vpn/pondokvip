@@ -11,7 +11,7 @@ Green="\e[92;1m"
 RED="\033[31m"
 YELLOW="\033[33m"
 BLUE="\033[36m"
-FONT="\033[0m"
+FONT="\033{0m"
 GREENBG="\033[42;37m"
 REDBG="\033[41;37m"
 OK="${Green}--->${FONT}"
@@ -62,7 +62,7 @@ domain=$(cat /etc/xray/domain)
 clear
 echo -e "\033[1;93m◇━━━━━━━━━━━━━━━━━◇\033[0m"
 echo -e " SSH Ovpn Account           "
-echo -e "\033[1;93m◇━━━━━━━━━━━━━━━━━◇\033[0m"
+echo -e "\033{1;93m◇━━━━━━━━━━━━━━━━━◇\033[0m"
 # ... existing code ...
 read -p "Username : " user
 read -p "Password : " pw
@@ -133,7 +133,7 @@ Payload WSS: GET wss://$bug/ HTTP/1.1[crlf]Host: $domain[crlf]Upgrade: websocket
 ===============================
 OVPN Download : https://$domain:81/
 ===============================
-
+by PONDOKVPN
 END
 
 CHATID=$(grep -E "^#bot# " "/etc/bot/.bot.db" | cut -d ' ' -f 3)
@@ -188,13 +188,15 @@ Terimakasih sudah order 🙏
 💸Nominal : 10 k
 📆Tanggal : $tnggl
 💳Payment : DANA</code>
+
+by PONDOKVPN
 "
 
 curl -s --max-time $TIME -d "chat_id=$CHATID&disable_web_page_preview=1&text=$TEXT&parse_mode=html" $URL >/dev/null
 echo ""
 echo -e "\033[1;93m=====================\033[0m"
 echo -e " SSH OVPN Account    "
-echo -e "\033[1;93m=====================\033[0m"
+echo -e "\033{1;93m=====================\033[0m"
 echo -e "Username         : $user"
 echo -e "Password         : $pw"
 echo -e "Limit Quota      : $quota GB"
@@ -218,7 +220,7 @@ echo -e "Port OVPN UDP    : 2200"
 echo -e "BadVPN UDP       : 7100, 7300, 7300"
 echo -e "\033[1;93m================================\033[0m"
 echo -e "Payload WSS      : GET wss://BUG.COM/ HTTP/1.1[crlf]Host: $domain[crlf]Upgrade: websocket[crlf][crlf]"
-echo -e "\033[1;93m================================\033[0m"
+echo -e "\033{1;93m================================\033[0m"
 echo -e "OVPN Download    : https://$domain:81/"
 echo -e "\033[1;93m================================\033[0m"
 echo -e "Save Link Account: https://$domain:81/ssh-$user.txt"
@@ -227,5 +229,6 @@ echo -e "Aktif Selama     : $masaaktif Hari"
 echo -e "Dibuat Pada      : $tnggl"
 echo -e "Berakhir Pada    : $expe"
 echo -e "\033[1;93m================================\033[0m"
+echo -e "by PONDOKVPN"
 echo -e " "
 echo -e ""

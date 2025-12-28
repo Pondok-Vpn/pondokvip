@@ -170,8 +170,7 @@ ${trojanlink}
 Link GRPC: 
 ${trojanlink1}
 =====================
-
-
+by PONDOKVPN
 END
 
 CHATID=$(grep -E "^#bot# " "/etc/bot/.bot.db" | cut -d ' ' -f 3)
@@ -221,6 +220,8 @@ Terimakasih sudah order 🙏
 💸Nominal : 10 K
 📆Tanggal : $tnggl
 💳Payment : DANA
+
+by PONDOKVPN
 "
 curl -s -X POST $URL --data-urlencode "chat_id=$CHATID" --data-urlencode "text=$TEXT" >/dev/null
 
@@ -250,11 +251,12 @@ echo -e "\033[0;34m◇━━━━━━━━━━━━━━━━━◇\033
 echo -e "Link none TLS    : ${trojanlink2}"
 echo -e "\033[0;34m◇━━━━━━━━━━━━━━━━━◇\033[0m"
 echo -e "Link GRPC        : ${trojanlink1}"
-echo -e "\033[0;34m◇━━━━━━━━━━━━━━━━━◇\033[0m"
+echo -e "\033{0;34m◇━━━━━━━━━━━━━━━━━◇\033[0m"
 echo -e "Format OpenClash : https://${domain}:81/vmess-$user.txt"
 echo -e "\033[0;34m◇━━━━━━━━━━━━━━━━━◇\033[0m"
 echo -e "Aktif Selama     : $masaaktif Hari"
 echo -e "Dibuat Pada      : $tnggl"
 echo -e "Berakhir Pada    : $expe"
 echo -e "\033[0;34m◇━━━━━━━━━━━━━━━━━◇\033[0m"
+echo -e "by PONDOKVPN"
 echo ""

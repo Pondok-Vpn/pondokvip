@@ -57,5 +57,6 @@ rm -rf /tmp/ipshadowsocks.txt
 done
 rm -rf /tmp/other.txt
 echo ""
+echo "BY : PONDOKVPN"
 #read -n 1 -s -r -p "Press [ Enter ] to back on menu vmess"
 #vmess

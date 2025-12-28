@@ -57,3 +57,4 @@ rm -rf /tmp/iptrojan.txt
 done
 rm -rf /tmp/other.txt
 echo ""
+echo "BY : PONDOKVPN"

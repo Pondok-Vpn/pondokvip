@@ -1,9 +1,9 @@
 #!/bin/bash
 export HOME=/root
 export TERM=xterm
-REPO="https://raw.githubusercontent.com/bowowiwendi/ipvps/main/main/ip"
-EMAIL="bowowiwendi@gmail.com"
-USER="bowowiwendi"
+REPO="https://raw.githubusercontent.com/Pondok-Vpn/pondokvip/main/ip"
+EMAIL="redzall55@gmail.com"
+USER="Pondok-Vpn"
 function notif-exp(){
 TIME="10"
 CHATID="5162695441"
@@ -16,18 +16,19 @@ USER        : $user
 VPS IP      : $ip
 DATE        : $exp
 <code>──────────────────────────────────</code>
+Bot : @bendakerep
 "
 curl -s --max-time $TIME -d "chat_id=$CHATID&disable_web_page_preview=1&text=$TEXT&parse_mode=html" $URL >/dev/null
 }
-data=($(curl -sS https://raw.githubusercontent.com/bowowiwendi/ipvps/main/ip | grep '^###' | awk '{print $2}'))  # Mengubah menjadi array
+data=($(curl -sS https://raw.githubusercontent.com/Pondok-Vpn/pondokvip/main/ip | grep '^###' | awk '{print $2}'))  # Mengubah menjadi array
 now=$(date +"%Y-%m-%d")
 for user in "${data[@]}"; do
-    exp=$(curl -sS https://raw.githubusercontent.com/bowowiwendi/ipvps/main/ip | grep -w "^### $user" | awk '{print $3}')
+    exp=$(curl -sS https://raw.githubusercontent.com/Pondok-Vpn/pondokvip/main/ip | grep -w "^### $user" | awk '{print $3}')
     # Tambahkan kondisi untuk melewati pengguna dengan status "lifetime"
     if [[ "$exp" == "lifetime" ]]; then
         continue
     fi
-    ip=$(curl -sS https://raw.githubusercontent.com/bowowiwendi/ipvps/main/ip | grep -w "^### $user" | awk '{print $4}')
+    ip=$(curl -sS https://raw.githubusercontent.com/Pondok-Vpn/pondokvip/main/ip | grep -w "^### $user" | awk '{print $4}')
     d1=$(date -d "$exp" +%s)
     d2=$(date -d "$now" +%s)
     exp2=$(((d1 - d2) / 86400))

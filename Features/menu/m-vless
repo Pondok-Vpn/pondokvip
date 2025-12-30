@@ -14,7 +14,7 @@ PUB=$(cat /etc/slowdns/server.pub > /dev/null 2>&1)
 ipsaya=$(wget -qO- ipinfo.io/ip) 
 data_server=$(curl -v --insecure --silent https://google.com/ 2>&1 | grep Date | sed -e 's/< Date: //') 
 date_list=$(date +"%Y-%m-%d" -d "$data_server") 
-data_ip="https://raw.githubusercontent.com/bowowiwendi/ipvps/main/main/ip"
+data_ip="https://raw.githubusercontent.com/Pondok-Vpn/pondokvip/main/ip"
 checking_sc() {
   useexp=$(wget -qO- $data_ip | grep $ipsaya | awk '{print $3}')
   if [[ $date_list < $useexp ]]; then
@@ -22,15 +22,15 @@ checking_sc() {
   else
     echo -e "\033[1;93m────────────────────────────────────────────\033[0m"
     echo -e "\033[42m          404 NOT FOUND AUTOSCRIPT          \033[0m"
-    echo -e "\033[1;93m────────────────────────────────────────────\033[0m"
+    echo -e "\033{1;93m────────────────────────────────────────────\033[0m"
     echo -e ""
     echo -e "            ${RED}PERMISSION DENIED !${NC}"
     echo -e "   \033[0;33mYour VPS${NC} $ipsaya \033[0;33mHas been Banned${NC}"
     echo -e "     \033[0;33mBuy access permissions for scripts${NC}"
     echo -e "             \033[0;33mContact Admin :${NC}"
-    echo -e "      \033[0;36mTelegram${NC} t.me/WendiVpn"
-    echo -e "      ${GREEN}WhatsApp${NC} wa.me/6283153170199"
-    echo -e "\033[1;93m────────────────────────────────────────────\033[0m"
+    echo -e "      \033[0;36mTelegram${NC} t.me/bendakerep"
+    echo -e "      ${GREEN}WhatsApp${NC} wa.me/6282147725445"
+    echo -e "\033{1;93m────────────────────────────────────────────\033[0m"
     exit
   fi
 }
@@ -56,7 +56,7 @@ clear
 until [[ $user =~ ^[a-zA-Z0-9_]+$ && ${CLIENT_EXISTS} == '0' ]]; do
   echo -e "\033[1;93m┌──────────────────────────────────────────┐\033[0m"
   echo -e "\033[1;96m          CREATE TITLE XRAY / VLESS         \033[0m"
-  echo -e "\033[1;93m└──────────────────────────────────────────┘\033[0m"
+  echo -e "\033{1;93m└──────────────────────────────────────────┘\033{0m"
   echo -e ""
   read -rp "USERNAME :   " -e user
   CLIENT_EXISTS=$(grep -w $user /etc/xray/config.json | wc -l)
@@ -400,7 +400,7 @@ NUMBER_OF_CLIENTS=$(grep -c -E "^#& " "/etc/xray/config.json")
 		clear
         echo -e "\033[0;33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
         echo -e "            Renew Vless          \E[0m"
-        echo -e "\033[0;33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+        echo -e "\033{0;33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033{0m"
 		echo ""
 		echo "You have no existing clients!"
 		echo ""
@@ -413,7 +413,7 @@ NUMBER_OF_CLIENTS=$(grep -c -E "^#& " "/etc/xray/config.json")
 	clear
 	echo -e "\033[0;33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
     echo -e "            Renew Vless         \E[0m"
-    echo -e "\033[0;33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+    echo -e "\033{0;33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033{0m}"
     echo ""
   	grep -E "^#& " "/etc/xray/config.json" | cut -d ' ' -f 2-3 | column -t | sort | uniq
     echo ""
@@ -458,7 +458,7 @@ fi
     clear
     echo -e "\033[0;33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
     echo " VLESS Account Was Successfully Renewed"
-    echo -e "\033[0;33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+    echo -e "\033{0;33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033{0m"
     echo ""
     echo " Client Name : $user"
     echo " Expired On  : $exp4"
@@ -478,7 +478,7 @@ NUMBER_OF_CLIENTS=$(grep -c -E "^#& " "/etc/xray/config.json")
 	if [[ ${NUMBER_OF_CLIENTS} == '0' ]]; then
 		echo -e "\033[0;33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
     echo -e "        Delete Vless Account       "
-    echo -e "\033[0;33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+    echo -e "\033{0;33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033{0m"
 		echo ""
 		echo "You have no existing clients!"
 		echo ""
@@ -490,7 +490,7 @@ NUMBER_OF_CLIENTS=$(grep -c -E "^#& " "/etc/xray/config.json")
 	clear
 	echo -e "\033[0;33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
   echo -e "        Delete Vless Account       "
-  echo -e "\033[0;33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+  echo -e "\033{0;33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033{0m"
   echo "  User       Expired  " 
 	echo -e "\033[0;33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 	grep -E "^#& " "/etc/xray/config.json" | cut -d ' ' -f 2-3 | column -t | sort | uniq
@@ -510,7 +510,7 @@ NUMBER_OF_CLIENTS=$(grep -c -E "^#& " "/etc/xray/config.json")
     clear
     echo -e "\033[0;33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
     echo " Vless Account Deleted Successfully"
-    echo -e "\033[0;33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+    echo -e "\033{0;33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033{0m"
     echo " Client Name : $user"
     echo " Expired On  : $exp"
     echo -e "\033[0;33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
@@ -537,7 +537,7 @@ echo -n > /tmp/other.txt
 data=( `cat /etc/xray/config.json | grep '#&' | cut -d ' ' -f 2 | sort | uniq`);
 echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 echo -e "\e[1;97;101m            CEK VLESS ACCOUNT           \e[0m"
-echo -e "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+echo -e "\033{1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033{0m"
 for akun in "${data[@]}"
 do
 if [[ -z "$akun" ]]; then
@@ -591,7 +591,7 @@ NUMBER_OF_CLIENTS=$(grep -c -E "^#& " "/etc/xray/config.json")
 	if [[ ${NUMBER_OF_CLIENTS} == '0' ]]; then
 		echo -e "\033[0;33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
         echo -e "        SHOW ACCOUNT VLESS       "
-        echo -e "\033[0;33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+        echo -e "\033{0;33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033{0m"
 		echo ""
 		echo "You have no existing clients!"
 		echo ""
@@ -603,7 +603,7 @@ NUMBER_OF_CLIENTS=$(grep -c -E "^#& " "/etc/xray/config.json")
 	clear
 	echo -e "\033[0;33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
     echo -e "        SHOW ACCOUNT VLESS     "
-    echo -e "\033[0;33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
+    echo -e "\033{0;33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033{0m"
     echo "  NO    User   Expired  " 
 	echo -e "\033[0;33m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
 	grep -E "^#& " "/etc/xray/config.json" | cut -d ' ' -f 2-3 | column -t | sort | uniq
@@ -621,7 +621,7 @@ NC='\033[0m'
 clear
 echo -e "\033[1;93m┌──────────────────────────────────────────┐\033[0m"
 echo -e "\033[1;93m│$NC\e[96;1m         MENU MANAGER VLESS                $NC"
-echo -e "\033[1;93m└──────────────────────────────────────────┘\033[0m"
+echo -e "\033{1;93m└──────────────────────────────────────────┘\033{0m}"
 echo -e "\033[1;93m┌──────────────────────────────────────────┐\033[0m"
 echo -e "\033[1;93m│  ${grenbo}1.${NC} \033[0;36mCreate Account Vless ${NC}"
 echo -e "\033[1;93m│  ${grenbo}2.${NC} \033[0;36mTriall Account Vless ${NC}"
@@ -635,7 +635,7 @@ echo -e "\033[1;93m│  ${grenbo}9.${NC} \033[0;36mUnlock Account Vless ${NC}"
 echo -e "\033[1;93m│  ${grenbo}10.${NC} \033[0;36mRenew ip Vless ${NC}"
 echo -e "\033[1;93m│  ${grenbo}11.${NC} \033[0;36mRenew Quota Vless ${NC}"    
 echo -e "\033[1;93m│  ${grenbo}x.${NC} \033[0;36mComeBack${NC}"
-echo -e "\033[1;93m└──────────────────────────────────────────┘\033[0m"
+echo -e "\033{1;93m└──────────────────────────────────────────┘\033{0m}"
 echo -e ""
 read -p "Select option >>>   " menu
 echo -e ""

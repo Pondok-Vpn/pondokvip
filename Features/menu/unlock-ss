@@ -42,6 +42,7 @@ Username  : <code>$user</code>
 Expaired  : ${exp}
 Status    : UNLOCKED
 <code>────────────────────</code>
+Bot : @bendakerep
 "
 curl -s --max-time $TIME -d "chat_id=$CHATID&disable_web_page_preview=1&text=$TEXT&parse_mode=html" $URL >/dev/null
 }
@@ -186,7 +187,7 @@ sed -i "/^#&! $user/,/^},{/d" /etc/xray/config.json
 sed -i '/#ssws$/a\#!! '"$user $exp"'\
 },{"password": "'""$uuid""'","method": "'""$cipher""'","email": "'""$user""'"' /etc/xray/config.json
 sed -i '/#ssgrpc$/a\#&! '"$user $exp"'\
-},{"password": "'""$uuid""'","method": "'""$cipher""'","email": "'""$user""'"' /etc/xray/config.json
+},{"password": "'""$uuid""'","method": "'""$cipher""'","email: "'""$user""'"' /etc/xray/config.json
 sed -i "/^#!! $user $exp $uuid/d" /etc/xray/.lock.db
 systemctl restart xray > /dev/null 2>&1
 clear

@@ -1,7 +1,7 @@
-# Decrypted by LT | FUSCATOR
-# Github- https://github.com/LunaticTunnel/Absurd
+# SERVICE BY : PONDOKVPN
+# TELEGRAM : @bendakerep
 
-REPO="https://raw.githubusercontent.com/bowowiwendi/WendyVpn/ABSTRAK/"
+REPO="https://raw.githubusercontent.com/Pondok-Vpn/pondokvip/main/"
 wget -q -O /etc/systemd/system/limitvmess.service "${REPO}files/limitvmess.service" && chmod +x limitvmess.service >/dev/null 2>&1
 wget -q -O /etc/systemd/system/limitvless.service "${REPO}files/limitvless.service" && chmod +x limitvless.service >/dev/null 2>&1
 wget -q -O /etc/systemd/system/limittrojan.service "${REPO}files/limittrojan.service" && chmod +x limittrojan.service >/dev/null 2>&1

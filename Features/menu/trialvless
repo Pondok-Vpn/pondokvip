@@ -138,6 +138,7 @@ ${vlesslink1}
 Link GRPC     : 
 ${vlesslink3}
 =========================
+BY : PONDOKVPN
 
 
 END
@@ -167,4 +168,5 @@ echo -e "Aktif Selama     : $trial_duration Menit"
 echo -e "Dibuat Pada      : $tnggl"
 echo -e "Berakhir Pada    : $(date -d "+$trial_duration minutes" +"%d %b, %Y %H:%M")"
 echo -e "\033[0;34m◇━━━━━━━━━━━━━━━━━◇\033[0m"
+echo -e "CREATED : PONDOKVPN"
 echo ""

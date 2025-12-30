@@ -4,7 +4,7 @@ biji=`date +"%Y-%m-%d" -d "$dateFromServer"`
 NC="\e[0m"
 RED="\033[0;31m"
 MYIP=$(curl -sS ipv4.icanhazip.com)
-Name=$(curl -sS https://raw.githubusercontent.com/bowowiwendi/WendyVpn/ABSTRAK/REGIST | grep $MYIP | awk '{print $2}')
+Name=$(curl -sS https://raw.githubusercontent.com/Pondok-Vpn/pondokvip/main/REGIST | grep $MYIP | awk '{print $2}')
 echo $Name > /usr/local/etc/.$Name.ini
 CekOne=$(cat /usr/local/etc/.$Name.ini)
 red='\e[1;31m'
@@ -23,6 +23,7 @@ Username  : $username
 Expaired  : ${exp}
 Status    : LOCKED
 <code>────────────────────</code>
+Bot : @bendakerep
 "
 curl -s --max-time $TIME -d "chat_id=$CHATID&disable_web_page_preview=1&text=$TEXT&parse_mode=html" $URL >/dev/null
 }

@@ -1,6 +1,10 @@
 #!/bin/bash
 z="\033[1;93m"
 domain=$(cat /etc/xray/domain)
+# VALIDASI WARNA
+grenbo="\033[1;92m"  # Hijau terang
+YELL="\033[1;93m"    # Kuning
+NC="\033[0m"         # No Color
 clear
 function addn(){
     clear
@@ -87,7 +91,7 @@ noobz
 }
 clear
 echo -e "\033[96m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-echo -e " \e[1;971m                 MENU NOOBZ                         \e[0m"
+echo -e " \e[1;97m                 BY : PONDOKVPN                         \e[0m"
 echo -e "\033[96m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
 echo -e "  ${grenbo}[01]${NC}${YELL} Buat Akun ${NC}"
 echo -e "  ${grenbo}[02]${NC}${YELL} Renew Akun ${NC}"

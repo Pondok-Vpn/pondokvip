@@ -12,9 +12,9 @@ BGX="\033[42m"
 END='\e[0m'
 
 # Konfigurasi
-REPO="https://raw.githubusercontent.com/bowowiwendi/ipvps/main/ip"
-EMAIL="bowowiwendi@gmail.com"
-USER="bowowiwendi"
+REPO="https://raw.githubusercontent.com/Pondok-Vpn/pondokvip/main/ip"
+EMAIL="redzall55@gmail.com"
+USER="Pondok-Vpn"
 TIMES="10"
 
 # Ambil informasi tanggal dari server Google
@@ -56,7 +56,7 @@ git init &> /dev/null
 git add . &> /dev/null
 git commit -m "update file" &> /dev/null
 git branch -M main &> /dev/null
-git remote add origin git@github.com:bowowiwendi/ipvps.git
+git remote add origin git@github.com:Pondok-Vpn/pondokvip.git
 git push -f origin main &> /dev/null
 
 # Kirim notifikasi ke Telegram
@@ -68,8 +68,11 @@ USERNAME       : <code>$user</code>
 IP Address     : $ip
 Expired On     : $exp4
 <code>───────────────────────────</code>
+Auther  : PONDOKVPN
 "
 curl -s --max-time $TIMES -d "chat_id=$CHATID&disable_web_page_preview=1&text=$TEXT&parse_mode=html" $URL >/dev/null
 
 # Bersihkan direktori
 rm -rf /root/ipvps
+echo "BY : PONDOKVPN"
+echo "(C) Copyright 2026-2029"

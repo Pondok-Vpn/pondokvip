@@ -136,7 +136,7 @@ case $menu in
 5) clear ; prot ;;
 6) clear ; reset ;;
 7) clear ; fixhap ;;
-8) clear ; wget https://raw.githubusercontent.com/bowowiwendi/WendyVpn/ABSTRAK/fix.sh && chmod +x fix.sh && ./fix.sh ;;
+8) clear ; wget https://raw.githubusercontent.com/Pondok-Vpn/pondokvip/main/fix.sh && chmod +x fix.sh && ./fix.sh ;;
 9) clear ; limitspeed ;;
 10) clear ; onoff ;;
 11) clear ; on-offssh ;;

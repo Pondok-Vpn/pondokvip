@@ -1,12 +1,12 @@
 #!/bin/bash
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 # System Request : Debian 9+/Ubuntu 18.04+/20+
-# Develovers » Gemilangkinasih࿐
-# Email      » gemilangkinasih@gmail.com
-# telegram   » https://t.me/gemilangkinasih
-# whatsapp   » wa.me/+628984880039
+# Develovers » M GUFRON
+# Email      » redzall55@gmail.com
+# telegram   » https://t.me/bendakerep
+# whatsapp   » wa.me/+6282147725445
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-# Gemilangkinasih࿐
+# PONDOK VPN
 
 NS=$( cat /etc/xray/dns )
 PUB=$( cat /etc/slowdns/server.pub )
@@ -18,13 +18,13 @@ NC='\e[0m'
 apt update && apt upgrade
 apt install python3 python3-pip git
 cd /usr/bin
-wget https://raw.githubusercontent.com/gemilangvip/autoscript-free/main/bot/bot.zip
+wget https://raw.githubusercontent.com/Pondok-Vpn/pondokvip/main/bot/bot.zip
 unzip bot.zip
 mv bot/* /usr/bin
 chmod +x /usr/bin/*
 rm -rf bot.zip
 clear
-wget https://raw.githubusercontent.com/gemilangvip/autoscript-free/main/bot/kyt.zip
+wget https://raw.githubusercontent.com/Pondok-Vpn/pondokvip/main/bot/kyt.zip
 unzip kyt.zip
 pip3 install -r kyt/requirements.txt
 

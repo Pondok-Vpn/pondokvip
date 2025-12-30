@@ -2,10 +2,10 @@
 export HOME=/root
 export TERM=xterm
 NC='\e[0m'
-Repo1="https://raw.githubusercontent.com/bowowiwendi/ipvps/main/ip"
-EMAIL="bowowiwendi@gmail.com"
-USER="bowowiwendi"
-git="git@github.com:bowowiwendi/ipvps.git"
+Repo1="https://raw.githubusercontent.com/Pondok-Vpn/pondokvip/main/ip"
+EMAIL="redzall55@gmail.com"
+USER="Pondok-Vpn"
+git="git@github.com:Pondok-Vpn/pondokvip.git"
 TIMES="10"
 CHATID=$(grep -E "^#bot# " "/etc/bot/.bot.db" | cut -d ' ' -f 3)
 KEY=$(grep -E "^#bot# " "/etc/bot/.bot.db" | cut -d ' ' -f 2)

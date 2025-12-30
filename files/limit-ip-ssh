@@ -1,4 +1,8 @@
 #!/bin/bash
+# AUTO-BAN MULTI LOGIN SSH
+# SERVICE BY : PONDOKVPN
+# TELEGRAM : @bendakerep
+
 function send_log(){
 CHATID=$(grep -E "^#bot# " "/etc/bot/.bot.db" | cut -d ' ' -f 3)
 KEY=$(grep -E "^#bot# " "/etc/bot/.bot.db" | cut -d ' ' -f 2)

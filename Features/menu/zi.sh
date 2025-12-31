@@ -829,7 +829,7 @@ function delete_account() {
     echo -e "${WHITE}$selected_password${NC}"
     read -p "Konfirmasi (y/n): " confirm
     
-    if [[ "$confirm" != "y" && "$confirm" != "Y" ]; then
+    if [[ "$confirm" != "y" && "$confirm" != "Y"]]; then
         echo -e "${YELLOW}Penghapusan dibatalkan.${NC}"
         sleep 1
         return

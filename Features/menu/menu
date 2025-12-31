@@ -80,6 +80,90 @@ function fun_bar() {
     tput cnorm
 }
 
+function install_zivpn() {
+    clear
+    echo -e "${BICyan}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+    echo -e "${BIWhite}            INSTALL ZIVPN UDP              ${NC}"
+    echo -e "${BICyan}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+    echo -e ""
+    
+    # Check if ZIVPN already installed
+    if [ -f "/etc/systemd/system/zivpn.service" ]; then
+        echo -e "${BIGreen}✅ ZIVPN sudah terinstall!${NC}"
+        echo -e "${BIBlue}📱 Menuju ke menu ZIVPN...${NC}"
+        sleep 2
+        if [ -f "/usr/local/sbin/zi.sh" ]; then
+            /usr/local/sbin/zi.sh
+        elif [ -f "/usr/bin/zi.sh" ]; then
+            /usr/bin/zi.sh
+        else
+            echo -e "${BIYellow}⚠️  ZIVPN script not found, downloading...${NC}"
+            wget -q -O /usr/local/sbin/zi.sh "https://raw.githubusercontent.com/Pondok-Vpn/pondokvip/main/Features/menu/zi.sh"
+            chmod +x /usr/local/sbin/zi.sh
+            /usr/local/sbin/zi.sh
+        fi
+        return
+    fi
+    
+    echo -e "${BIYellow}⚠️  Installing ZIVPN UDP Module...${NC}"
+    echo -e "${BIBlue}⏳ This may take a few minutes...${NC}"
+    echo -e ""
+    
+    # Install dependencies
+    echo -e "${BIBlue}📦 Installing dependencies...${NC}"
+    apt-get update -y > /dev/null 2>&1
+    apt-get install -y jq curl zip figlet lolcat vnstat openssl > /dev/null 2>&1
+    
+    # Download ZIVPN script
+    echo -e "${BIBlue}⬇️  Downloading ZIVPN script...${NC}"
+    wget -q -O /usr/local/sbin/zi.sh "https://raw.githubusercontent.com/Pondok-Vpn/pondokvip/main/Features/menu/zi.sh"
+    chmod +x /usr/local/sbin/zi.sh
+    
+    # Download helper script if needed
+    if [ ! -f "/usr/local/bin/zivpn_helper.sh" ]; then
+        wget -q -O /usr/local/bin/zivpn_helper.sh "https://raw.githubusercontent.com/Pondok-Vpn/udp-zivpn/main/zivpn_helper.sh"
+        chmod +x /usr/local/bin/zivpn_helper.sh
+    fi
+    
+    # Create alias
+    if ! grep -q "alias zi='/usr/local/sbin/zi.sh'" /root/.bashrc; then
+        echo "alias zi='/usr/local/sbin/zi.sh'" >> /root/.bashrc
+    fi
+    
+    # Run ZIVPN setup
+    echo -e "${BIBlue}🚀 Starting ZIVPN installation...${NC}"
+    
+    # Run the ZIVPN script in background and capture output
+    /usr/local/sbin/zi.sh start 2>&1 | tee /tmp/zivpn_install.log
+    
+    # Check if installation was successful
+    if [ -f "/etc/systemd/system/zivpn.service" ]; then
+        echo -e ""
+        echo -e "${BIGreen}✅ ZIVPN installation completed successfully!${NC}"
+        echo -e ""
+        echo -e "${BICyan}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+        echo -e "${BIWhite}📋 ZIVPN INSTALLATION SUMMARY${NC}"
+        echo -e "${BICyan}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+        echo -e "${BIBlue}📍 Service Status:${NC} $(systemctl is-active zivpn.service 2>/dev/null || echo "Not running")"
+        echo -e "${BIBlue}📍 Config Location:${NC} /etc/zivpn/"
+        echo -e "${BIBlue}📍 Menu Script:${NC} /usr/local/sbin/zi.sh"
+        echo -e "${BIBlue}📍 Commands:${NC}"
+        echo -e "   ${BIYellow}zi${NC}         - Open ZIVPN menu"
+        echo -e "   ${BIYellow}menu${NC}       - Open main menu"
+        echo -e "   ${BIYellow}zi start${NC}   - Start ZIVPN service"
+        echo -e "${BICyan}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+    else
+        echo -e ""
+        echo -e "${BIRed}❌ ZIVPN installation may have failed!${NC}"
+        echo -e "${BIYellow}⚠️  Please check the logs at /tmp/zivpn_install.log${NC}"
+        echo -e ""
+    fi
+    
+    echo -e ""
+    echo -e "${BIBlue}🔄 Returning to menu in 5 seconds...${NC}"
+    sleep 5
+}
+
 function upp(){
     clear
     cd /usr/local/
@@ -98,6 +182,14 @@ function upp(){
         chmod +x menu/*
         enc menu/*
         mv menu/* /usr/local/sbin
+        
+        # Tambahkan ZIVPN script ke folder menu jika belum ada
+        if [ ! -f "/usr/local/sbin/zi.sh" ]; then
+            echo -e "${BIBlue}Adding ZIVPN script to menu...${NC}"
+            wget -q -O /usr/local/sbin/zi.sh "https://raw.githubusercontent.com/Pondok-Vpn/pondokvip/main/Features/menu/zi.sh"
+            chmod +x /usr/local/sbin/zi.sh
+        fi
+        
         #rm -rf menu
         rm -rf menu.zip
         rm -rf update.sh
@@ -146,7 +238,6 @@ function edit_figlet_text(){
 }
 
 # USERNAME IZIN IP
-# GANTI DENGAN URL REPOSITORY ANDA
 username=$(curl -sS ${regist} | grep $MYIP | awk '{print $2}')
 if [ -z "$username" ]; then
     username=$(cat /usr/bin/user) # Jika variabel kosong, isi dengan "anonim"
@@ -259,12 +350,10 @@ let trb=$trx/2
 ssx=$(cat /etc/xray/config.json | grep "#!!" | wc -l)
 let ssa=$ssx/2
 
-
 # ACTIVATED & EXPIRED
 Info="${BIGreen}Active${NC}"
 Eror="${BIRed}Expired${NC}"
 today=`date -d "0 days" +"%Y-%m-%d"`
-# GANTI DENGAN URL REPOSITORY ANDA
 Exp1=$(curl -sS ${regist} | grep $MYIP | awk '{print $3}')
 if [[ $today < $Exp1 ]]; then
     sts="${Info}"
@@ -296,7 +385,7 @@ echo -e "${BICyan} │${BIWhite} WS-ePRO  : $status_ws_epro   ${BIWhite} DROPBEA
 echo -e "${BICyan} ├──────────────────────────────────────────────────────────────────┤${NC}"
 echo -e "${BICyan} │${BIWhite} Traffic  : ${BIGreen}↓ $dtoday ${BIYellow}↑ $utoday ${BICyan}TOT: $ttoday${NC}"
 echo -e "${BICyan} ╰──────────────────────────────────────────────────────────────────╯${NC}"
-echo -e " ${WHITE}         SSH: $ssh1 TROJAN : $trx SS-R : $ssx VLESS : $vlx VMESS : $vmc ${NC}"
+echo -e " ${WHITE}       SSH: $ssh1 TROJAN : $trb SS-R : $ssa VLESS : $vla VMESS : $vma ${NC}"
 echo -e "${BICyan} ╭── ${BIWhite}Menu Options${BICyan} ──────────────────────────────────────────────────╮${NC}"
 echo -e "${BICyan} │${NC}  [${BIYellow}01${NC}] SSH & OpenVPN       [${BIYellow}06${NC}] Trial Account       [${BIYellow}11${NC}] Bac/Res  ${BICyan} ${NC}"
 echo -e "${BICyan} │${NC}  [${BIYellow}02${NC}] Vmess WS/GRPC       [${BIYellow}07${NC}] Reboot Server       [${BIYellow}12${NC}] Bot Panel       ${BICyan} ${NC}"
@@ -346,7 +435,7 @@ case $opt in
     ;;
 10)
     clear
-    zi.sh
+    install_zivpn
     ;;
 11)
     clear

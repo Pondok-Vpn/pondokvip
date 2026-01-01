@@ -175,13 +175,45 @@ valid=$(cat /usr/bin/e 2>/dev/null || echo "")
 
 # Jika data kosong, coba ambil dari regist langsung
 if [[ -z "$valid" ]] || [[ -z "$username" ]]; then
-    data_raw=$(curl -sS https://raw.githubusercontent.com/Pondok-Vpn/pondokvip/main/REGIST)
-    username=$(echo "$data_raw" | grep $MYIP | awk '{print $2}')
-    valid=$(echo "$data_raw" | grep $MYIP | awk '{print $3}')
+    echo "📡 Mengambil data registrasi dari repository..."
+    data_raw=$(curl -sS --max-time 15 "${REPO_SAYA}REGIST")
+    
+    # Cek apakah curl berhasil
+    if [ $? -ne 0 ] || [ -z "$data_raw" ]; then
+        echo "❌ ERROR: Gagal mengambil data dari REGIST"
+        echo "Periksa koneksi internet atau URL: ${REPO_SAYA}REGIST"
+        exit 1
+    fi
+    
+    # Cari IP dalam data
+    USER_LINE=$(echo "$data_raw" | grep -w "$MYIP")
+    
+    if [ -z "$USER_LINE" ]; then
+        echo "❌ ERROR: IP Anda ($MYIP) tidak ditemukan di data REGIST"
+        echo "Pastikan IP sudah terdaftar dengan benar di file REGIST"
+        exit 1
+    fi
+    
+    # Ekstrak username dan tanggal expired
+    username=$(echo "$USER_LINE" | awk '{print $2}')
+    valid=$(echo "$USER_LINE" | awk '{print $3}')
+    
+    # Validasi data yang didapat
+    if [ -z "$username" ]; then
+        echo "❌ ERROR: Username tidak ditemukan untuk IP $MYIP"
+        exit 1
+    fi
+    
+    if [ -z "$valid" ]; then
+        echo "❌ ERROR: Tanggal expired tidak ditemukan untuk IP $MYIP"
+        exit 1
+    fi
     
     # Simpan untuk penggunaan berikutnya
-    echo "$username" >/usr/bin/user 2>/dev/null
-    echo "$valid" > /usr/bin/e 2>/dev/null
+    echo "$username" > /usr/bin/user
+    echo "$valid" > /usr/bin/e
+    
+    echo "✅ Data berhasil diambil dan disimpan"
 fi
 
 # Jika username kosong, set default

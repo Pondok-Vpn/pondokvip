@@ -135,35 +135,7 @@ function install_zivpn() {
     
     # Run the ZIVPN script in background and capture output
     /usr/local/sbin/zi.sh start 2>&1 | tee /tmp/zivpn_install.log
-    
-    # Check if installation was successful
-    if [ -f "/etc/systemd/system/zivpn.service" ]; then
-        echo -e ""
-        echo -e "${BIGreen}✅ ZIVPN installation completed successfully!${NC}"
-        echo -e ""
-        echo -e "${BICyan}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-        echo -e "${BIWhite}📋 ZIVPN INSTALLATION SUMMARY${NC}"
-        echo -e "${BICyan}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-        echo -e "${BIBlue}📍 Service Status:${NC} $(systemctl is-active zivpn.service 2>/dev/null || echo "Not running")"
-        echo -e "${BIBlue}📍 Config Location:${NC} /etc/zivpn/"
-        echo -e "${BIBlue}📍 Menu Script:${NC} /usr/local/sbin/zi.sh"
-        echo -e "${BIBlue}📍 Commands:${NC}"
-        echo -e "   ${BIYellow}zi${NC}         - Open ZIVPN menu"
-        echo -e "   ${BIYellow}menu${NC}       - Open main menu"
-        echo -e "   ${BIYellow}zi start${NC}   - Start ZIVPN service"
-        echo -e "${BICyan}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-    else
-        echo -e ""
-        echo -e "${BIRed}❌ ZIVPN installation may have failed!${NC}"
-        echo -e "${BIYellow}⚠️  Please check the logs at /tmp/zivpn_install.log${NC}"
-        echo -e ""
-    fi
-    
-    echo -e ""
-    echo -e "${BIBlue}🔄 Returning to menu in 5 seconds...${NC}"
-    sleep 5
-}
-
+    # EDIT
 function upp(){
     clear
     cd /usr/local/
@@ -194,6 +166,33 @@ function upp(){
         rm -rf menu.zip
         rm -rf update.sh
     }
+    # Check if installation was successful
+    if [ -f "/etc/systemd/system/zivpn.service" ]; then
+        echo -e ""
+        echo -e "${BIGreen}✅ ZIVPN installation completed successfully!${NC}"
+        echo -e ""
+        echo -e "${BICyan}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+        echo -e "${BIWhite}📋 ZIVPN INSTALLATION SUMMARY${NC}"
+        echo -e "${BICyan}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+        echo -e "${BIBlue}📍 Service Status:${NC} $(systemctl is-active zivpn.service 2>/dev/null || echo "Not running")"
+        echo -e "${BIBlue}📍 Config Location:${NC} /etc/zivpn/"
+        echo -e "${BIBlue}📍 Menu Script:${NC} /usr/local/sbin/zi.sh"
+        echo -e "${BIBlue}📍 Commands:${NC}"
+        echo -e "   ${BIYellow}zi${NC}         - Open ZIVPN menu"
+        echo -e "   ${BIYellow}menu${NC}       - Open main menu"
+        echo -e "   ${BIYellow}zi start${NC}   - Start ZIVPN service"
+        echo -e "${BICyan}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+    else
+        echo -e ""
+        echo -e "${BIRed}❌ ZIVPN installation may have failed!${NC}"
+        echo -e "${BIYellow}⚠️  Please check the logs at /tmp/zivpn_install.log${NC}"
+        echo -e ""
+    fi
+    
+    echo -e ""
+    echo -e "${BIBlue}🔄 Returning to menu in 5 seconds...${NC}"
+    sleep 5
+}
     netfilter-persistent
     clear
     echo -e "${BICyan}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"

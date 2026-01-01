@@ -28,20 +28,6 @@ if [ "$1" = "start" ] || [ "$1" = "install" ]; then
     # Jalankan instalasi dengan mengeksekusi diri sendiri
     exec bash "$SCRIPT_PATH"
 fi
-function bypass_license_check() {
-    clear
-    echo -e "${PURPLE}╔══════════════════════════════════════════╗${NC}"
-    echo -e "${PURPLE}║        ${LIGHT_CYAN}CRETAED: PONDOK VPN${PURPLE}               ║${NC}"
-    echo -e "${PURPLE}╚══════════════════════════════════════════╝${NC}"
-    echo ""
-    echo -e "${YELLOW}⚠️  WARNING: This will bypass license verification.${NC}"
-    echo -e "${YELLOW}Only use this for testing or if you know what you're doing.${NC}"
-    echo ""
-    
-    read -p "Enter username for this server: " username
-    if [ -z "$username" ]; then
-        username="unregistered"
-    fi
     
     mkdir -p /etc/zivpn
     echo "CLIENT_NAME=${username}" > "$LICENSE_INFO_FILE"

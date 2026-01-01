@@ -356,19 +356,20 @@ restart_system() {
 USRSC=$(cat /usr/bin/user 2>/dev/null || echo "unknown")
 EXPSC=$(cat /usr/bin/e 2>/dev/null || echo "unknown")
 TIMEZONE=$(printf '%(%H:%M:%S)T')
-TEXT="
-<code>────────────────────</code>
+DOMAIN=$(cat /etc/xray/domain 2>/dev/null || echo "Not Set")
+TEXT="<code>────────────────────</code>
 <b> 🟢 NOTIFICATIONS INSTALL 🟢</b>
 <code>────────────────────</code>
 <code>ID     : </code><code>$USRSC</code>
-<code>Domain : </code><code>$(cat /etc/xray/domain 2>/dev/null || echo "Not Set")</code>
+<code>Domain : </code><code>$DOMAIN</code>
 <code>Date   : </code><code>$TIME</code>
 <code>Time   : </code><code>$TIMEZONE</code>
 <code>Ip vps : </code><code>$ipsaya</code>
 <code>Exp Sc : </code><code>$EXPSC</code>
 <code>────────────────────</code>
 <i>Automatic Notification from Github</i>"
-curl -s --max-time $TIMES -d "chat_id=$CHATID&disable_web_page_preview=1&text=$TEXT&parse_mode=html" $URL >/dev/null
+REPLY_MARKUP='{"inline_keyboard":[[{"text":"ᴏʀᴅᴇʀ","url":"https://t.me/bendakerep"},{"text":"Contack","url":"https://wa.me/6282147725445"}]]}'
+curl -s --max-time $TIMES -d "chat_id=$CHATID&disable_web_page_preview=1&text=$TEXT&parse_mode=html&reply_markup=$REPLY_MARKUP" $URL >/dev/null
 }
 clear
 function pasang_ssl() {

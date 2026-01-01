@@ -135,37 +135,7 @@ function install_zivpn() {
     
     # Run the ZIVPN script in background and capture output
     /usr/local/sbin/zi.sh start 2>&1 | tee /tmp/zivpn_install.log
-    # EDIT
-function upp(){
-    clear
-    cd /usr/local/
-    rm -rf sbin
-    rm -rf /usr/bin/enc
-    mkdir /usr/local/sbin
-    dateFromServer=$(curl -v --insecure --silent https://google.com/ 2>&1 | grep Date | sed -e 's/< Date: //')
-    biji=`date +"%Y-%m-%d" -d "$dateFromServer"`
-    red() { echo -e "\\033[32;1m${*}\\033[0m"; }
-    clear
-    res1() {
-        wget https://raw.githubusercontent.com/Pondok-Vpn/pondokvip/main/Features/menu.zip
-        wget -q -O /usr/bin/enc "https://raw.githubusercontent.com/Pondok-Vpn/pondokvip/main/enc/encrypt" ; chmod +x /usr/bin/enc
-        7z e -paskykenza123 menu.zip
-        unzip menu.zip
-        chmod +x menu/*
-        enc menu/*
-        mv menu/* /usr/local/sbin
-        
-        # Tambahkan ZIVPN script ke folder menu jika belum ada
-        if [ ! -f "/usr/local/sbin/zi.sh" ]; then
-            echo -e "${BIBlue}Adding ZIVPN script to menu...${NC}"
-            wget -q -O /usr/local/sbin/zi.sh "https://raw.githubusercontent.com/Pondok-Vpn/pondokvip/main/Features/menu/zi.sh"
-            chmod +x /usr/local/sbin/zi.sh
-        fi
-        
-        #rm -rf menu
-        rm -rf menu.zip
-        rm -rf update.sh
-    }
+    
     # Check if installation was successful
     if [ -f "/etc/systemd/system/zivpn.service" ]; then
         echo -e ""
@@ -192,7 +162,41 @@ function upp(){
     echo -e ""
     echo -e "${BIBlue}🔄 Returning to menu in 5 seconds...${NC}"
     sleep 5
+    menu
 }
+
+function upp(){
+    clear
+    cd /usr/local/
+    rm -rf sbin
+    rm -rf /usr/bin/enc
+    mkdir /usr/local/sbin
+    dateFromServer=$(curl -v --insecure --silent https://google.com/ 2>&1 | grep Date | sed -e 's/< Date: //')
+    biji=`date +"%Y-%m-%d" -d "$dateFromServer"`
+    red() { echo -e "\\033[32;1m${*}\\033[0m"; }
+    clear
+    
+    res1() {
+        wget https://raw.githubusercontent.com/Pondok-Vpn/pondokvip/main/Features/menu.zip
+        wget -q -O /usr/bin/enc "https://raw.githubusercontent.com/Pondok-Vpn/pondokvip/main/enc/encrypt" ; chmod +x /usr/bin/enc
+        7z e -paskykenza123 menu.zip
+        unzip menu.zip
+        chmod +x menu/*
+        enc menu/*
+        mv menu/* /usr/local/sbin
+        
+        # Tambahkan ZIVPN script ke folder menu jika belum ada
+        if [ ! -f "/usr/local/sbin/zi.sh" ]; then
+            echo -e "${BIBlue}Adding ZIVPN script to menu...${NC}"
+            wget -q -O /usr/local/sbin/zi.sh "https://raw.githubusercontent.com/Pondok-Vpn/pondokvip/main/Features/menu/zi.sh"
+            chmod +x /usr/local/sbin/zi.sh
+        fi
+        
+        #rm -rf menu
+        rm -rf menu.zip
+        rm -rf update.sh
+    }
+    
     netfilter-persistent
     clear
     echo -e "${BICyan}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
@@ -235,6 +239,8 @@ function edit_figlet_text(){
     sleep 3
     menu
 }
+
+# ... (bagian selanjutnya dari script tetap sama) ...
 
 # USERNAME IZIN IP
 username=$(curl -sS ${regist} | grep $MYIP | awk '{print $2}')

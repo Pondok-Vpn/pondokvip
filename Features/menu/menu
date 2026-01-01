@@ -167,14 +167,183 @@ function install_zivpn() {
 
 function upp() {
     clear
-    cd /usr/local/
-    rm -rf sbin
-    rm -rf /usr/bin/enc
-    mkdir /usr/local/sbin
-    dateFromServer=$(curl -v --insecure --silent https://google.com/ 2>&1 | grep Date | sed -e 's/< Date: //')
-    biji=`date +"%Y-%m-%d" -d "$dateFromServer"`
-    red() { echo -e "\\033[32;1m${*}\\033[0m"; }
-    clear
+    echo -e "${BICyan}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+    echo -e "${BIWhite}              UPDATE SCRIPT                ${NC}"
+    echo -e "${BICyan}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+    echo -e ""
+    
+    # ===== BACKUP SCRIPT SEBELUM UPDATE =====
+    echo -e "${BIBlue}📦 Creating backup of current scripts...${NC}"
+    
+    BACKUP_DIR="/tmp/menu_backup_$(date +%Y%m%d_%H%M%S)"
+    mkdir -p "$BACKUP_DIR"
+    
+    # Backup semua script di /usr/local/sbin/
+    if [ -d "/usr/local/sbin" ]; then
+        cp -r /usr/local/sbin/* "$BACKUP_DIR/" 2>/dev/null
+        echo -e "${BIGreen}✅ Backup created at: $BACKUP_DIR${NC}"
+    fi
+    
+    # Backup script menu utama
+    if [ -f "/usr/local/sbin/menu" ]; then
+        cp /usr/local/sbin/menu "$BACKUP_DIR/menu_main" 2>/dev/null
+    fi
+    
+    # ===== DOWNLOAD UPDATE =====
+    echo -e "${BIBlue}⬇️  Downloading update...${NC}"
+    
+    # Download ke temporary location
+    cd /tmp
+    rm -f /tmp/menu.zip 2>/dev/null
+    rm -rf /tmp/menu_update 2>/dev/null
+    
+    wget -q -O /tmp/menu.zip "https://raw.githubusercontent.com/Pondok-Vpn/pondokvip/main/Features/menu.zip"
+    
+    if [ ! -f "/tmp/menu.zip" ]; then
+        echo -e "${BIRed}❌ Failed to download update!${NC}"
+        echo -e "${BIYellow}⚠️  Restoring from backup...${NC}"
+        
+        # Restore dari backup
+        if [ -d "$BACKUP_DIR" ]; then
+            cp -r "$BACKUP_DIR"/* /usr/local/sbin/ 2>/dev/null
+            echo -e "${BIGreen}✅ Scripts restored from backup${NC}"
+        fi
+        
+        sleep 3
+        menu
+        return
+    fi
+    
+    # ===== EXTRACT UPDATE =====
+    echo -e "${BIBlue}📂 Extracting update...${NC}"
+    
+    mkdir -p /tmp/menu_update
+    cd /tmp/menu_update
+    
+    # Coba extract dengan 7z atau unzip
+    if command -v 7z &> /dev/null; then
+        7z x -y -paskykenza123 /tmp/menu.zip >/dev/null 2>&1
+    else
+        apt-get install -y p7zip-full >/dev/null 2>&1
+        7z x -y -paskykenza123 /tmp/menu.zip >/dev/null 2>&1
+    fi
+    
+    # Jika 7z gagal, coba unzip
+    if [ ! -d "/tmp/menu_update/menu" ]; then
+        echo -e "${BIYellow}⚠️  7z extraction failed, trying unzip...${NC}"
+        unzip -P askykenza123 /tmp/menu.zip -d /tmp/menu_update >/dev/null 2>&1
+    fi
+    
+    # ===== PROCESS UPDATE =====
+    if [ -d "/tmp/menu_update/menu" ]; then
+        echo -e "${BIBlue}🔧 Processing update files...${NC}"
+        
+        # Download encryptor jika belum ada
+        if [ ! -f "/usr/bin/enc" ]; then
+            wget -q -O /usr/bin/enc "https://raw.githubusercontent.com/Pondok-Vpn/pondokvip/main/enc/encrypt"
+            chmod +x /usr/bin/enc
+        fi
+        
+        # Encrypt semua script
+        cd /tmp/menu_update/menu
+        chmod +x *
+        
+        if [ -f "/usr/bin/enc" ]; then
+            enc * >/dev/null 2>&1
+        fi
+        
+        # ===== SAFE COPY TO DESTINATION =====
+        echo -e "${BIBlue}🚚 Installing updated scripts...${NC}"
+        
+        # Pastikan folder tujuan ada
+        mkdir -p /usr/local/sbin
+        
+        # Copy dengan backup otomatis
+        for file in *; do
+            if [ -f "$file" ]; then
+                # Backup file lama jika ada
+                if [ -f "/usr/local/sbin/$file" ]; then
+                    cp "/usr/local/sbin/$file" "/usr/local/sbin/${file}.backup.$(date +%s)" 2>/dev/null
+                fi
+                
+                # Copy file baru
+                cp "$file" /usr/local/sbin/
+                chmod +x "/usr/local/sbin/$file"
+            fi
+        done
+        
+        # ===== POST-UPDATE CHECKS =====
+        echo -e "${BIBlue}🔍 Verifying installation...${NC}"
+        
+        # Pastikan script utama ada
+        if [ ! -f "/usr/local/sbin/menu" ]; then
+            echo -e "${BIYellow}⚠️  Main menu script not found in update, restoring...${NC}"
+            if [ -f "$BACKUP_DIR/menu_main" ]; then
+                cp "$BACKUP_DIR/menu_main" /usr/local/sbin/menu
+                chmod +x /usr/local/sbin/menu
+            fi
+        fi
+        
+        # Pastikan zi.sh ada (untuk ZIVPN)
+        if [ ! -f "/usr/local/sbin/zi.sh" ]; then
+            echo -e "${BIBlue}➕ Adding ZIVPN script...${NC}"
+            wget -q -O /usr/local/sbin/zi.sh "https://raw.githubusercontent.com/Pondok-Vpn/pondokvip/main/Features/menu/zi.sh"
+            chmod +x /usr/local/sbin/zi.sh
+        fi
+        
+        # ===== CLEANUP =====
+        echo -e "${BIBlue}🧹 Cleaning up...${NC}"
+        rm -rf /tmp/menu_update
+        rm -f /tmp/menu.zip
+        
+        # Hapus backup lama (simpan hanya backup terbaru)
+        find /tmp -name "menu_backup_*" -type d -mtime +1 -exec rm -rf {} \; 2>/dev/null
+        
+        # ===== SUCCESS MESSAGE =====
+        echo -e ""
+        echo -e "${BIGreen}✅ Update completed successfully!${NC}"
+        echo -e ""
+        
+        # Tampilkan perubahan
+        echo -e "${BICyan}📋 Update Summary:${NC}"
+        echo -e "${BIBlue}├── Scripts updated: $(ls /tmp/menu_update/menu/* 2>/dev/null | wc -l)${NC}"
+        echo -e "${BIBlue}├── Backup created: $BACKUP_DIR${NC}"
+        echo -e "${BIBlue}├── Main menu: $(ls -la /usr/local/sbin/menu 2>/dev/null | awk '{print $5}') bytes${NC}"
+        echo -e "${BIBlue}└── Total scripts: $(ls /usr/local/sbin/* 2>/dev/null | wc -l)${NC}"
+        
+    else
+        echo -e "${BIRed}❌ Failed to extract update files!${NC}"
+        echo -e "${BIYellow}⚠️  Restoring from backup...${NC}"
+        
+        # Restore dari backup
+        if [ -d "$BACKUP_DIR" ]; then
+            mkdir -p /usr/local/sbin
+            cp -r "$BACKUP_DIR"/* /usr/local/sbin/ 2>/dev/null
+            echo -e "${BIGreen}✅ Scripts restored from backup${NC}"
+        fi
+        
+        # Cleanup
+        rm -rf /tmp/menu_update
+        rm -f /tmp/menu.zip
+    fi
+    
+    echo -e ""
+    echo -e "${BICyan}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+    echo -e ""
+    
+    # ===== AUTO-RELOAD =====
+    echo -e "${BIBlue}🔄 Reloading menu in 3 seconds...${NC}"
+    sleep 3
+    
+    # Reload menu dengan cara yang aman
+    if [ -f "/usr/local/sbin/menu" ]; then
+        exec /usr/local/sbin/menu
+    else
+        # Fallback ke script saat ini
+        echo -e "${BIYellow}⚠️  Using current script as fallback...${NC}"
+        menu
+    fi
+}
     
     res1() {
         wget https://raw.githubusercontent.com/Pondok-Vpn/pondokvip/main/Features/menu.zip

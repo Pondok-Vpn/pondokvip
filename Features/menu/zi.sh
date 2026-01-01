@@ -3,8 +3,56 @@
 # Modified by: PONDOK VPN
 # Contact: 082147725445
 # Telegram: @bendakerep
-# redzall55@gmail.com
 
+# --- Check if called from main menu ---
+if [ "$1" = "start" ] || [ "$1" = "install" ]; then
+    # Jika dipanggil dari menu utama dengan parameter start/install
+    echo "╔══════════════════════════════════════════╗"
+    echo "║      ZIVPN INSTALLATION FROM MENU        ║"
+    echo "╚══════════════════════════════════════════╝"
+    echo ""
+    echo "📦 Installing dependencies..."
+    
+    # Pastikan dependencies terinstall
+    apt-get update -y >/dev/null 2>&1
+    apt-get install -y jq curl zip figlet lolcat vnstat openssl >/dev/null 2>&1
+    
+    # Lanjutkan ke instalasi normal
+    echo "✅ Dependencies installed"
+    echo "🚀 Proceeding with ZIVPN installation..."
+    echo ""
+    
+    # Simpan path script ini
+    SCRIPT_PATH=$(realpath "$0")
+    
+    # Jalankan instalasi dengan mengeksekusi diri sendiri
+    exec bash "$SCRIPT_PATH"
+fi
+function bypass_license_check() {
+    clear
+    echo -e "${PURPLE}╔══════════════════════════════════════════╗${NC}"
+    echo -e "${PURPLE}║        ${LIGHT_CYAN}CRETAED: PONDOK VPN${PURPLE}               ║${NC}"
+    echo -e "${PURPLE}╚══════════════════════════════════════════╝${NC}"
+    echo ""
+    echo -e "${YELLOW}⚠️  WARNING: This will bypass license verification.${NC}"
+    echo -e "${YELLOW}Only use this for testing or if you know what you're doing.${NC}"
+    echo ""
+    
+    read -p "Enter username for this server: " username
+    if [ -z "$username" ]; then
+        username="unregistered"
+    fi
+    
+    mkdir -p /etc/zivpn
+    echo "CLIENT_NAME=${username}" > "$LICENSE_INFO_FILE"
+    echo "EXPIRY_DATE=lifetime" >> "$LICENSE_INFO_FILE"
+    echo "REGISTERED_IP=$(curl -s ifconfig.me)" >> "$LICENSE_INFO_FILE"
+    
+    echo -e "${GREEN}✅ License info created for: ${username}${NC}"
+    echo -e "${YELLOW}⚠️  This is NOT a real license!${NC}"
+    sleep 2
+    return 0
+}
 # --- UI Definitions ---
 PINK='\033[0;95m'
 PURPLE='\033[0;35m'
@@ -24,7 +72,7 @@ ORANGE='\033[0;33m'
 NC='\033[0m' # No Color
 
 # --- License Info ---
-LICENSE_URL="https://raw.githubusercontent.com/Pondok-Vpn/pondokvip/main/register"
+LICENSE_URL="https://raw.githubusercontent.com/Pondok-Vpn/pondokvip/main/ip"
 LICENSE_INFO_FILE="/etc/zivpn/.license_info"
 
 # --- User Database with Device Limit ---
@@ -105,8 +153,8 @@ function verify_license() {
 
     local client_name
     local expiry_date_str
-    client_name=$(echo "$license_entry" | awk '{print $1}')
-    expiry_date_str=$(echo "$license_entry" | awk '{print $2}')
+    client_name=$(echo "$license_entry" | awk '{print $2}')
+    expiry_date_str=$(echo "$license_entry" | awk '{print $3}')
 
     local expiry_timestamp
     expiry_timestamp=$(date -d "$expiry_date_str" +%s)
@@ -829,7 +877,7 @@ function delete_account() {
     echo -e "${WHITE}$selected_password${NC}"
     read -p "Konfirmasi (y/n): " confirm
     
-    if [[ "$confirm" != "y" && "$confirm" != "Y"]]; then
+    if [[ "$confirm" != "y" && "$confirm" != "Y" ]]; then
         echo -e "${YELLOW}Penghapusan dibatalkan.${NC}"
         sleep 1
         return
@@ -1338,10 +1386,46 @@ function show_menu() {
     esac
 }
 
-# --- Main Installation and Setup Logic ---
 function run_setup() {
-    verify_license # <-- VERIFY LICENSE HERE
-
+    clear
+    echo -e "${PURPLE}╔══════════════════════════════════════════╗${NC}"
+    echo -e "${PURPLE}║        ${LIGHT_CYAN}ZIVPN SETUP${PURPLE}                  ║${NC}"
+    echo -e "${PURPLE}╚══════════════════════════════════════════╝${NC}"
+    echo ""
+    
+    # Coba verifikasi license
+    if ! verify_license; then
+        echo -e "${YELLOW}License verification failed.${NC}"
+        echo ""
+        echo -e "${LIGHT_CYAN}Options:${NC}"
+        echo -e "1) ${WHITE}Retry license check${NC}"
+        echo -e "2) ${WHITE}Bypass and continue (not recommended)${NC}"
+        echo -e "3) ${WHITE}Exit setup${NC}"
+        echo ""
+        read -p "Choose option [1-3]: " option
+        
+        case $option in
+            1)
+                if verify_license; then
+                    echo -e "${GREEN}License verified, continuing setup...${NC}"
+                else
+                    echo -e "${RED}Still failing. Exiting.${NC}"
+                    exit 1
+                fi
+                ;;
+            2)
+                bypass_license_check
+                ;;
+            3)
+                echo -e "${YELLOW}Exiting setup.${NC}"
+                exit 0
+                ;;
+            *)
+                echo -e "${RED}Invalid option. Exiting.${NC}"
+                exit 1
+                ;;
+        esac
+    fi
     # --- Run Base Installation ---
     echo "--- Starting Base Installation ---"
     wget -O zi.sh https://raw.githubusercontent.com/Pondok-Vpn/udp-zivpn/main/zi.sh
@@ -1546,8 +1630,8 @@ if [ -z "$license_entry" ]; then
 fi
 
 # 5. IP Found, Check for Expiry or Renewal
-client_name_remote=$(echo "$license_entry" | awk '{print $1}')
-expiry_date_remote=$(echo "$license_entry" | awk '{print $2}')
+client_name_remote=$(echo "$license_entry" | awk '{print $2}')
+expiry_date_remote=$(echo "$license_entry" | awk '{print $3}')
 expiry_timestamp_remote=$(date -d "$expiry_date_remote" +%s)
 current_timestamp=$(date +%s)
 

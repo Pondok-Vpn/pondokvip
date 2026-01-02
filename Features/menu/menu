@@ -234,7 +234,7 @@ let trb=$trx/2
 ssx=$(cat /etc/xray/config.json | grep "#!!" | wc -l)
 let ssa=$ssx/2
 
-ACTIVATED & EXPIRED dengan DAYS LEFT
+# ACTIVATED & EXPIRED dengan DAYS LEFT
 Info="${BIGreen}Active${NC}"
 Eror="${BIRed}Expired${NC}"
 today=$(date +'%Y-%m-%d')  # Format tanggal saat ini

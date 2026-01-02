@@ -5,59 +5,46 @@ REPO_SAYA="https://raw.githubusercontent.com/Pondok-Vpn/pondokvip/main"
 URL_REGIST="$REPO_SAYA/REGIST"
 
 echo "🔍 [VALIDASI] MENUNGGU HARAPAN YANG TAK PASTI...."
+
+# ===== CEK KONEKSI =====
 for i in {1..10}; do
     ping -c1 8.8.8.8 >/dev/null 2>&1 && break
     sleep 2
 done
 
 # ===== AMBIL IP VPS =====
-MYIP=$(curl -4 -s ipv4.icanhazip.com || \
-       curl -4 -s api.ipify.org || \
-       curl -4 -s ifconfig.me)
+MYIP=$(curl -4 -s ipv4.icanhazip.com || curl -4 -s api.ipify.org)
 
 if [[ -z "$MYIP" ]]; then
-    echo "❌ ERROR: TIDAK DAPAT MENDETEKSI IP PUBLIK"
+    echo "❌ GAGAL MENGAMBIL IP PUBLIK"
     exit 1
 fi
 echo "✅ IP SERVER ADA: $MYIP"
 
 # ===== AMBIL REGIST =====
 echo "📋 MEMBACA FILE REGIST: $URL_REGIST"
-REGIST_DATA=$(curl -s --max-time 15 "$URL_REGIST")
+REGIST_DATA=$(curl -s "$URL_REGIST" \
+    | tr -d '\r' \
+    | sed '/^#/d')
 
 if [[ -z "$REGIST_DATA" ]]; then
-    echo "❌ ERROR: FILE REGIST TIDAK BISA DI BACA"
+    echo "❌ FILE REGIST KOSONG / TIDAK TERBACA"
     exit 1
 fi
 
-# =================================================
-# FORMAT BARU : IP USER EXPIRED
-# FORMAT LAMA : ### USER EXPIRED/LIVETIME IP
-# =================================================
-
-# --- CEK FORMAT BARU ---
+# ===== CARI DATA IP =====
 USER_DATA=$(echo "$REGIST_DATA" | awk -v ip="$MYIP" '$1 == ip')
 
-if [[ -n "$USER_DATA" ]]; then
-    username=$(echo "$USER_DATA" | awk '{print $2}')
-    exp_date=$(echo "$USER_DATA" | awk '{print $3}')
-    FORMAT="BARU"
-else
-    # --- CEK FORMAT LAMA ---
-    USER_DATA=$(echo "$REGIST_DATA" | awk -v ip="$MYIP" '$NF == ip')
-
-    if [[ -z "$USER_DATA" ]]; then
-        echo "❌ IP $MYIP TIDAK TERDAFTAR DI REGIST"
-        exit 1
-    fi
-
-    username=$(echo "$USER_DATA" | awk '{print $2}')
-    exp_date=$(echo "$USER_DATA" | awk '{print $3}')
-    FORMAT="LAMA"
+if [[ -z "$USER_DATA" ]]; then
+    echo "❌ IP $MYIP TIDAK TERDAFTAR DI REGIST"
+    exit 1
 fi
 
-echo "✅ FORMAT TERDETEKSI : $FORMAT"
+username=$(echo "$USER_DATA" | awk '{print $2}')
+exp_date=$(echo "$USER_DATA" | awk '{print $3}')
+
 echo "👤 USER : $username"
+echo "📅 EXPIRED : $exp_date"
 
 # ===== SIMPAN CACHE =====
 mkdir -p /etc/pondokvpn
@@ -66,24 +53,24 @@ echo "$username" > /etc/pondokvpn/user.conf
 echo "$exp_date" > /etc/pondokvpn/exp.conf
 
 # ===== CEK MASA AKTIF =====
-if [[ "$exp_date" =~ ^(LIFETIME|Lifetime|livetime)$ ]]; then
-    echo "✅ STATUS AKTIF : $username (LIFETIME)"
+if [[ "$exp_date" =~ ^(LIFETIME|Lifetime)$ ]]; then
+    echo "✅ STATUS AKTIF : LIFETIME"
 else
     if ! date -d "$exp_date" >/dev/null 2>&1; then
-        echo "❌ FORMAT TANGGAL TIDAK VALID DI REGIST"
+        echo "❌ FORMAT TANGGAL SALAH DI REGIST"
         exit 1
     fi
 
-    today_ts=$(date +%s)
-    exp_ts=$(date -d "$exp_date" +%s)
+    today=$(date +%s)
+    exp=$(date -d "$exp_date" +%s)
 
-    if [[ $exp_ts -lt $today_ts ]]; then
-        echo "⛔ MASA AKTIF HABIS ⛔ ($exp_date)"
+    if [[ $exp -lt $today ]]; then
+        echo "⛔ LICENSE EXPIRED ⛔"
         exit 1
     fi
 
-    days_left=$(( (exp_ts - today_ts) / 86400 ))
-    echo "✅ STATUS AKTIF : $username ($days_left hari tersisa)"
+    sisa=$(( (exp - today) / 86400 ))
+    echo "✅ STATUS AKTIF : $sisa HARI"
 fi
 
 echo "✅ VALIDASI LICENSE SELESAI"

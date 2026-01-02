@@ -3,41 +3,123 @@
 # Modified by: PONDOK VPN
 # Contact: 082147725445
 # Telegram: @bendakerep
-
-# --- Check if called from main menu ---
-if [ "$1" = "start" ] || [ "$1" = "install" ]; then
-    # Jika dipanggil dari menu utama dengan parameter start/install
+# ================================================
+# FUNGSI INSTALL ZIVPN FROM MAIN MENU
+# ================================================
+function install_zivpn_menu() {
+    clear
     echo "╔══════════════════════════════════════════╗"
-    echo "║      ZIVPN INSTALLATION FROM MENU        ║"
+    echo "║          INSTALL ZIVPN FROM MENU         ║"
     echo "╚══════════════════════════════════════════╝"
     echo ""
-    echo "📦 Installing dependencies..."
     
-    # Pastikan dependencies terinstall
-    apt-get update -y >/dev/null 2>&1
-    apt-get install -y jq curl zip figlet lolcat vnstat openssl >/dev/null 2>&1
+    # Cek apakah sudah root
+    if [ "$(id -u)" -ne 0 ]; then
+        echo -e "${RED}❌ Script harus dijalankan sebagai root!${NC}"
+        echo -e "${YELLOW}Gunakan: sudo bash menu.sh${NC}"
+        echo ""
+        read -p "Tekan Enter untuk kembali..."
+        return
+    fi
     
-    # Lanjutkan ke instalasi normal
-    echo "✅ Dependencies installed"
-    echo "🚀 Proceeding with ZIVPN installation..."
+    # Cek apakah ZIVPN sudah terinstall
+    if check_zivpn_installed; then
+        echo -e "${YELLOW}⚠️  ZIVPN sudah terinstall!${NC}"
+        echo -e "${CYAN}Menuju ke menu ZIVPN...${NC}"
+        sleep 2
+        main
+        return
+    fi
+    
+    echo -e "${BLUE}📥 Mengunduh script instalasi ZIVPN...${NC}"
+    
+    # Download script zi.sh dari GitHub
+    echo -e "${YELLOW}➤ Mengunduh dari GitHub: Pondok-Vpn/pondokvip/main/zi.sh${NC}"
+    
+    if curl -s -o /tmp/zi.sh "https://raw.githubusercontent.com/Pondok-Vpn/pondokvip/main/zi.sh"; then
+        echo -e "${GREEN}✅ Berhasil mengunduh script${NC}"
+        
+        # Berikan izin eksekusi
+        chmod +x /tmp/zi.sh
+        
+        echo -e "${BLUE}🚀 Memulai instalasi ZIVPN...${NC}"
+        echo -e "${YELLOW}⏳ Proses ini mungkin memakan waktu beberapa menit...${NC}"
+        echo -e "${YELLOW}⚠️  Pastikan koneksi internet stabil${NC}"
+        echo ""
+        
+        # Jalankan instalasi dengan parameter install
+        bash /tmp/zi.sh install
+        
+        # Cek hasil instalasi
+        if check_zivpn_installed; then
+            echo ""
+            echo -e "${GREEN}════════════════════════════════════════════${NC}"
+            echo -e "${GREEN}✅ INSTALASI ZIVPN BERHASIL!${NC}"
+            echo -e "${GREEN}════════════════════════════════════════════${NC}"
+            echo ""
+            echo -e "${CYAN}ZIVPN telah berhasil diinstall.${NC}"
+            echo -e "${CYAN}Silakan konfigurasi melalui menu ZIVPN.${NC}"
+            echo ""
+            
+            # Tampilkan informasi penting
+            if [ -f "/etc/systemd/system/zivpn.service" ]; then
+                echo -e "${LIGHT_BLUE}📊 Informasi ZIVPN:${NC}"
+                echo -e "${WHITE}• Service: ${GREEN}zivpn.service${NC}"
+                echo -e "${WHITE}• Config: ${GREEN}/etc/zivpn/config.json${NC}"
+                echo -e "${WHITE}• Users DB: ${GREEN}/etc/zivpn/users.db${NC}"
+                echo ""
+            fi
+            
+            # Auto start menu ZIVPN
+            echo -e "${YELLOW}➤ Memulai menu ZIVPN...${NC}"
+            sleep 3
+            clear
+            main
+        else
+            echo ""
+            echo -e "${RED}════════════════════════════════════════════${NC}"
+            echo -e "${RED}❌ INSTALASI ZIVPN GAGAL!${NC}"
+            echo -e "${RED}════════════════════════════════════════════${NC}"
+            echo ""
+            echo -e "${YELLOW}Kemungkinan penyebab:${NC}"
+            echo -e "${WHITE}1. Koneksi internet tidak stabil${NC}"
+            echo -e "${WHITE}2. Repository GitHub tidak dapat diakses${NC}"
+            echo -e "${WHITE}3. Dependency tidak terinstall${NC}"
+            echo -e "${WHITE}4. Port yang dibutuhkan sedang digunakan${NC}"
+            echo ""
+            echo -e "${CYAN}Silakan coba install manual atau periksa log:${NC}"
+            echo -e "${WHITE}journalctl -u zivpn.service -n 50${NC}"
+        fi
+        
+    else
+        echo -e "${RED}❌ Gagal mengunduh script instalasi${NC}"
+        echo -e "${YELLOW}Periksa:${NC}"
+        echo -e "${WHITE}1. Koneksi internet${NC}"
+        echo -e "${WHITE}2. Repository: https://github.com/Pondok-Vpn/pondokvip${NC}"
+        echo -e "${WHITE}3. File zi.sh di branch main${NC}"
+    fi
+    
     echo ""
-    
-    # Simpan path script ini
-    SCRIPT_PATH=$(realpath "$0")
-    
-    # Jalankan instalasi dengan mengeksekusi diri sendiri
-    exec bash "$SCRIPT_PATH"
-fi
-    
-    mkdir -p /etc/zivpn
-    echo "CLIENT_NAME=${username}" > "$LICENSE_INFO_FILE"
-    echo "EXPIRY_DATE=lifetime" >> "$LICENSE_INFO_FILE"
-    echo "REGISTERED_IP=$(curl -s ifconfig.me)" >> "$LICENSE_INFO_FILE"
-    
-    echo -e "${GREEN}✅ License info created for: ${username}${NC}"
-    echo -e "${YELLOW}⚠️  This is NOT a real license!${NC}"
-    sleep 2
-    return 0
+    echo -e "${BLUE}Tekan Enter untuk kembali ke menu utama...${NC}"
+    read -p ""
+}
+
+# ================================================
+# Fungsi untuk menampilkan menu ZIVPN (jika sudah terinstall)
+# ================================================
+function zivpn_menu() {
+    if check_zivpn_installed; then
+        echo -e "${CYAN}➤ Memulai menu ZIVPN...${NC}"
+        sleep 2
+        main
+    else
+        echo -e "${YELLOW}ZIVPN belum terinstall!${NC}"
+        echo -e "${CYAN}Ingin install ZIVPN? (y/n): ${NC}"
+        read -p "" choice
+        if [[ "$choice" == "y" || "$choice" == "Y" ]]; then
+            install_zivpn_menu
+        fi
+    fi
 }
 # --- UI Definitions ---
 PINK='\033[0;95m'

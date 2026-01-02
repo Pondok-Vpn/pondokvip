@@ -76,11 +76,14 @@ fi
 echo "✅ VALIDASI LICENSE SELESAI"
 sleep 2
 clear
-echo "🟢 MEMULAI INSTALASI UTAMA 🟢"
+# ===== SIMPAN CACHE LICENSE =====
+mkdir -p /usr/bin
+echo "$username" > /usr/bin/user
+echo "$exp_date" > /usr/bin/e
+echo "✅ MEMULAI INSTALASI UTAMA ✅"
 apt update -y
 apt upgrade -y
 apt install -y curl
-# ... dan seterusnya (lanjutan skrip instalasi VPN Anda)
 apt install wondershaper -y
 Green="\e[92;1m"
 RED="\033[1;31m"
@@ -152,54 +155,6 @@ clear
 MYIP=$(curl -sS ipv4.icanhazip.com)
 echo -e "\e[32mloading...\e[0m"
 clear
-clear
-clear
-# Ambil data dari file regist
-username=$(cat /usr/bin/user 2>/dev/null || echo "")
-valid=$(cat /usr/bin/e 2>/dev/null || echo "")
-
-# Jika data kosong, coba ambil dari regist langsung
-if [[ -z "$valid" ]] || [[ -z "$username" ]]; then
-    echo "📡 Mengambil data registrasi dari repository..."
-    data_raw=$(curl -sS --max-time 15 "${REPO_SAYA}REGIST")
-    
-    # Cek apakah curl berhasil
-    if [ $? -ne 0 ] || [ -z "$data_raw" ]; then
-        echo "❌ ERROR: Gagal mengambil data dari REGIST"
-        echo "Periksa koneksi internet atau URL: ${REPO_SAYA}REGIST"
-        exit 1
-    fi
-    
-    # Cari IP dalam data
-    USER_LINE=$(echo "$data_raw" | grep -w "$MYIP")
-    
-    if [ -z "$USER_LINE" ]; then
-        echo "❌ ERROR: IP Anda ($MYIP) tidak ditemukan di data REGIST"
-        echo "Pastikan IP sudah terdaftar dengan benar di file REGIST"
-        exit 1
-    fi
-    
-    # Ekstrak username dan tanggal expired
-    username=$(echo "$USER_LINE" | awk '{print $2}')
-    valid=$(echo "$USER_LINE" | awk '{print $3}')
-    
-    # Validasi data yang didapat
-    if [ -z "$username" ]; then
-        echo "❌ ERROR: Username tidak ditemukan untuk IP $MYIP"
-        exit 1
-    fi
-    
-    if [ -z "$valid" ]; then
-        echo "❌ ERROR: Tanggal expired tidak ditemukan untuk IP $MYIP"
-        exit 1
-    fi
-    
-    # Simpan untuk penggunaan berikutnya
-    echo "$username" > /usr/bin/user
-    echo "$valid" > /usr/bin/e
-    
-    echo "✅ Data berhasil diambil dan disimpan"
-fi
 
 # Jika username kosong, set default
 if [[ -z "$username" ]]; then

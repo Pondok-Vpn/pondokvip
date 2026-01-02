@@ -1,9 +1,11 @@
 #!/bin/bash
-# Zivpn UDP Module Manager
-# Modified by: PONDOK VPN
-# Contact: 082147725445
+# =============================
+# UDP ZIVPN MODULE MANAGER
+# BY: PONDOK VPN
 # Telegram: @bendakerep
+# =============================
 # VALIDASI WARNA
+# =============================
 PINK='\033[0;95m'
 PURPLE='\033[0;35m'
 MAGENTA='\033[0;95m'

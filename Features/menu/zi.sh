@@ -166,52 +166,13 @@ fi
 
 # --- License Verification Function ---
 function verify_license() {
-    echo "Verifying check skipped"
-    local SERVER_IP
-    SERVER_IP=$(curl -s ifconfig.me)
-    if [ -z "$SERVER_IP" ]; then
-        echo -e "${RED}Failed to retrieve server IP. Please check your internet connection.${NC}"
-        exit 1
-    fi
-
-    local license_data
-    license_data=$(curl -s "$LICENSE_URL")
-    if [ $? -ne 0 ] || [ -z "$license_data" ]; then
-        echo -e "${RED}Gagal terhubung ke server lisensi. Mohon periksa koneksi internet Anda.${NC}"
-        exit 1
-    fi
-
-    local license_entry
-    license_entry=$(echo "$license_data" | grep -w "$SERVER_IP")
-
-    if [ -z "$license_entry" ]; then
-        echo -e "${RED}Verifikasi Lisensi Gagal! IP Anda tidak terdaftar. IP: ${SERVER_IP}${NC}"
-        exit 1
-    fi
-
-    local client_name
-    local expiry_date_str
-    client_name=$(echo "$license_entry" | awk '{print $2}')
-    expiry_date_str=$(echo "$license_entry" | awk '{print $3}')
-
-    local expiry_timestamp
-    expiry_timestamp=$(date -d "$expiry_date_str" +%s)
-    local current_timestamp
-    current_timestamp=$(date +%s)
-
-    if [ "$expiry_timestamp" -le "$current_timestamp" ]; then
-        echo -e "${RED}Verifikasi Lisensi Gagal! Lisensi untuk IP ${SERVER_IP} telah kedaluwarsa. Tanggal Kedaluwarsa: ${expiry_date_str}${NC}"
-        exit 1
-    fi
-    
-    echo -e "${LIGHT_GREEN}Verifikasi Lisensi Berhasil! Client: ${client_name}, IP: ${SERVER_IP}${NC}"
-    sleep 2 # Brief pause to show the message
-    
+    echo -e "${GREEN}✅ License verification bypassed${NC}"
     mkdir -p /etc/zivpn
-    echo "CLIENT_NAME=${client_name}" > "$LICENSE_INFO_FILE"
-    echo "EXPIRY_DATE=${expiry_date_str}" >> "$LICENSE_INFO_FILE"
+    echo "CLIENT_NAME=Local_User" > "$LICENSE_INFO_FILE"
+    echo "EXPIRY_DATE=$(date -d "+365 days" +%Y-%m-%d)" >> "$LICENSE_INFO_FILE"
+    sleep 1
+    return 0
 }
-
 # --- Utility Functions ---
 function restart_zivpn() {
     echo "Restarting ZIVPN service..."
@@ -1466,7 +1427,7 @@ function run_setup() {
     fi
     # --- Run Base Installation ---
     echo "--- Starting Base Installation ---"
-    wget -O zi.sh https://raw.githubusercontent.com/Pondok-Vpn/udp-zivpn/main/zi.sh
+    wget -O zi.sh https://raw.githubusercontent.com/Pondok-Vpn/pondokvip/main/zi.sh
     if [ $? -ne 0 ]; then echo "Failed to download base installer. Aborting."; exit 1; fi
     chmod +x zi.sh
     ./zi.sh
@@ -1501,7 +1462,7 @@ function run_setup() {
     
     # Download helper script from repository
     echo "Downloading helper script..."
-    wget -O /usr/local/bin/zivpn_helper.sh https://raw.githubusercontent.com/Pondok-Vpn/udp-zivpn/main/zivpn_helper.sh
+    wget -O /usr/local/bin/zivpn_helper.sh https://raw.githubusercontent.com/Pondok-Vpn/pondokvip/main/zivpn_helper.sh
     if [ $? -ne 0 ]; then
         echo "Failed to download helper script. Aborting."
         exit 1

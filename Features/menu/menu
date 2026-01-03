@@ -52,7 +52,7 @@ CORE=$(printf '%-1s' "$(grep -c cpu[0-9] /proc/stat)")
 TIMEZONE=$(printf '%(%H:%M:%S)T') 
 SERONLINE=$(uptime -p | cut -d " " -f 2-10000) 
 Repo="https://raw.githubusercontent.com/Pondok-Vpn/pondokvip/main/"
-regist="https://raw.githubusercontent.com/Pondok-Vpn/pondokvip/main/ip"
+regist="https://raw.githubusercontent.com/Pondok-Vpn/pondokvip/main/DAFTAR"
 MYIP=$(curl -sS ipv4.icanhazip.com) 
 
 # FUNCTION DEFINITIONS
@@ -115,7 +115,7 @@ function upp(){
     echo -e ""
     echo -e "${BIGreen}Redirecting to menu in 3 seconds...${NC}"
     sleep 3
-    exec /usr/local/sbin/menu
+    menu
 }
 
 function edit_figlet_text(){
@@ -142,7 +142,7 @@ function edit_figlet_text(){
     echo -e ""
     echo -e "${BIGreen}Returning to menu in 3 seconds...${NC}"
     sleep 3
-    exec /usr/local/sbin/menu
+    menu
 }
 
 # VPS INFORMATION
@@ -374,7 +374,7 @@ case $opt in
     clear
     UDEPE
     ;;
-#9 | 09)
+9 | 09)
     clear
     upp
     ;;
@@ -408,11 +408,11 @@ case $opt in
     ;;
 x | X)
     clear
-    exec /usr/local/sbin/menu
+    menu
     ;;
 *)
     echo -e "${BIRed}Invalid Option!${NC}"
     sleep 1
-    exec /usr/local/sbin/menu
+    menu
     ;;
 esac

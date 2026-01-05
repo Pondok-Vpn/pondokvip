@@ -1,10 +1,10 @@
 #!/bin/bash
-# ═══════════════════════════════
-# UDP ZIVPN MODULE MANAGER SYSTEM
+# ══════════════════════════════
+# UDP ZIVPN MODULE MANAGER SHELL
 # BY : PONDOK VPN (C) 2026-01-04
 # TELEGRAM : @bendakerep
 # EMAIL : redzall55@gmail.com
-# ═══════════════════════════════
+# ══════════════════════════════
 
 # ════ VALIDASI WARNA ════
 YELLOW='\033[1;33m'
@@ -13,7 +13,7 @@ BOLD_WHITE='\033[1;37m'
 CYAN='\033[0;36m'
 GREEN='\033[0;32m'
 LIGHT_GREEN='\033[1;32m'
-NC='\033[0m' # No Color
+NC='\033[0m' 
 WHITE='\033[1;97m'
 LIGHT_BLUE='\033[1;94m'
 LIGHT_CYAN='\033[1;96m'
@@ -30,6 +30,14 @@ function verify_license() {
     echo "Verifying installation license..."
     local SERVER_IP
     SERVER_IP=$(curl -s ifconfig.me)
+    if [[ "$SERVER_IP" == *":"* ]]; then
+        echo "IPv6 detected: $SERVER_IP"
+        local SERVER_IP_V4
+        SERVER_IP_V4=$(curl -s -4 ifconfig.me 2>/dev/null || curl -s ipv4.icanhazip.com 2>/dev/null)
+        if [ -n "$SERVER_IP_V4" ]; then
+            echo "IPv4 also available: $SERVER_IP_V4"
+        fi
+    fi
     if [ -z "$SERVER_IP" ]; then
         echo -e "${RED}Failed to retrieve server IP. Please check your internet connection.${NC}"
         exit 1
@@ -41,17 +49,22 @@ function verify_license() {
         exit 1
     fi
     local license_entry
-    license_entry=$(echo "$license_data" | grep -w "$SERVER_IP")
+    license_entry=$(echo "$license_data" | grep -F "$SERVER_IP")
+    if [ -z "$license_entry" ] && [ -n "$SERVER_IP_V4" ]; then
+        license_entry=$(echo "$license_data" | grep -F "$SERVER_IP_V4")
+    fi
     if [ -z "$license_entry" ]; then
         clear
         echo -e "${RED}╔════════════════════════════════════════════════════╗${NC}"
         echo -e "${RED}║          LISENSI GAGAL - IP TIDAK TERDAFTAR        ║${NC}"
         echo -e "${RED}╠════════════════════════════════════════════════════╣${NC}"
         echo -e "${RED}║                                                    ║${NC}"
-        echo -e "${RED}║  IP Server: $SERVER_IP                               ║${NC}"
+        echo -e "${RED}║  IPv6: $SERVER_IP                               ║${NC}"
+        if [ -n "$SERVER_IP_V4" ]; then
+        echo -e "${RED}║  IPv4: $SERVER_IP_V4                               ║${NC}"
+        fi
         echo -e "${RED}║                                                    ║${NC}"
-        echo -e "${RED}║  Format file DAFTAR: IP NAMA TANGGAL               ║${NC}"
-        echo -e "${RED}║  Contoh: 103.78.212.45 PondokVPN 2026-12-31        ║${NC}"
+        echo -e "${RED}║  Pastikan IP di atas ada di file Daftar            ║${NC}"
         echo -e "${RED}║                                                    ║${NC}"
         echo -e "${RED}║  Hubungi Admin: @bendakerep                        ║${NC}"
         echo -e "${RED}║                                                    ║${NC}"
@@ -66,7 +79,7 @@ function verify_license() {
     echo -e "${LIGHT_GREEN}╠════════════════════════════════════════════════════╣${NC}"
     echo -e "${LIGHT_GREEN}║                                                    ║${NC}"
     echo -e "${LIGHT_GREEN}║  IP Server: $SERVER_IP                               ║${NC}"
-    echo -e "${LIGHT_GREEN}║  Client    : $client_name                            ║${NC}"
+    echo -e "${LIGHT_GREEN}║  Client    : $client_name                            ║{NC}"
     echo -e "${LIGHT_GREEN}║                                                    ║${NC}"
     echo -e "${LIGHT_GREEN}╚════════════════════════════════════════════════════╝${NC}"
     sleep 2
@@ -123,8 +136,8 @@ function _create_account_logic() {
 
 # ════ Fungsi buat akun & Format akun ════
 function create_manual_account() {
-    echo "--- Create New Zivpn Account ---"
-    read -p "Enter new password: " password
+    echo "一═⌊✦⌉ 𝗕𝗨𝗔𝗧 𝗔𝗞𝗨𝗡 𝗭𝗜𝗩𝗣𝗡 ⌊✦⌉═一"
+    read -p "Buat password: " password
     if [ -z "$password" ]; then
     echo -e "${RED}Password tidak boleh kosong.${NC}"
     return
@@ -156,7 +169,7 @@ function create_manual_account() {
                 HOST=$CERT_CN
             fi
             local EXPIRE_FORMATTED
-            EXPIRE_FORMATTED=$(date -d "@$expiry_date" +"%d %B %Y")
+            EXPIRE_FORMATTED=$(date -d "@$expiry_date" +"%d %B %Y") # BY : PONDOK VPN
             
             clear
     echo -e "${LIGHT_GREEN}╔══════════════════════════════════════════╗${NC}"
@@ -202,7 +215,7 @@ function _create_trial_account_logic() {
 }
 
 function create_trial_account() {
-    echo "--- Create Trial Zivpn Account ---"
+    echo "一═⌊✦⌉ 𝗕𝗨𝗔𝗧 𝗧𝗥𝗜𝗔𝗟 𝗔𝗞𝗨𝗡 𝗭𝗜𝗩𝗣𝗡 ⌊✦⌉═一"
     read -p "Enter active period (in minutes): " minutes
     if ! [[ "$minutes" =~ ^[0-9]+$ ]]; then
         echo "Invalid number of minutes."
@@ -284,8 +297,8 @@ function _renew_account_logic() {
 function _display_accounts() {
     clear
     echo -e "${PURPLE}╔══════════════════════════════════════════╗${NC}"
-    echo -e "${PURPLE}║       ${LIGHT_CYAN}DAFTAR AKUN AKTIF${PURPLE}             ║${NC}"
-    echo -e "${PURPLE}╚══════════════════════════════════════════╝${NC}"
+    echo -e "${PURPLE}║ ${LIGHT_CYAN}一═⌊✦⌉ 𝗗𝗔𝗙𝗧𝗔𝗥 𝗔𝗞𝗨𝗡 𝗔𝗞𝗧𝗜𝗙 ⌊✦⌉═一${PURPLE} ║${NC}"
+    echo -e "${PURPLE}╚══════════════════════════════════════════╝${NC}"    echo ""
     echo ""
     USER_FILE="/etc/zivpn/users.db"
     if [ ! -f "$USER_FILE" ] || [ ! -s "$USER_FILE" ]; then
@@ -329,10 +342,9 @@ function _display_accounts() {
 function renew_account() {
     clear
     echo -e "${PURPLE}╔════════════════════════════════════════════════════╗${NC}"
-    echo -e "${PURPLE}║          ${LIGHT_CYAN}RENEW ACCOUNT${PURPLE}                       ║${NC}"
+    echo -e "${PURPLE}║   ${LIGHT_CYAN}一═⌊✦⌉ 𝗥𝗘𝗡𝗘𝗪 𝗔𝗖𝗖𝗢𝗨𝗡𝗧 ⌊✦⌉═一${PURPLE}      ║${NC}"
     echo -e "${PURPLE}╚════════════════════════════════════════════════════╝${NC}"
-    USER_FILE="/etc/zivpn/users.db"
-    if [ ! -f "$USER_FILE" ] || [ ! -s "$USER_FILE" ]; then
+USER_FILE="/etc/zivpn/users.db"    if [ ! -f "$USER_FILE" ] || [ ! -s "$USER_FILE" ]; then
         echo -e "${YELLOW}Tidak ada akun ditemukan.${NC}"
         echo ""
         read -p "Tekan Enter untuk kembali ke menu..."
@@ -434,7 +446,7 @@ function _delete_account_logic() {
         return 1
     fi
     if [ ! -f "$db_file" ] || ! grep -q "^${password}:" "$db_file"; then
-        echo "Error: Password '${password}' not found."
+        echo "Error: Password '${password}' not found." # BY : @bendakerep
         return 1
     fi
     jq --arg pass "$password" 'del(.auth.config[] | select(. == $pass))' "$config_file" > "$tmp_config_file"
@@ -445,7 +457,7 @@ function _delete_account_logic() {
         restart_zivpn
         return 0
     else
-        rm -f "$tmp_config_file" # Clean up temp file
+        rm -f "$tmp_config_file"
         echo "Error: Failed to update config.json. No changes were made."
         return 1
     fi
@@ -453,9 +465,9 @@ function _delete_account_logic() {
 
 function delete_account() {
     clear
-    echo "--- Delete Account ---"
+    echo "一═⌊✦⌉ 𝗛𝗔𝗣𝗨𝗦 𝗔𝗞𝗨𝗡 𝗭𝗜𝗩𝗣𝗡 ⌊✦⌉═一"
     _display_accounts
-    echo "" # Add a newline for better spacing
+    echo ""
     read -p "Enter password to delete: " password
     if [ -z "$password" ]; then
         echo "Password cannot be empty."
@@ -463,13 +475,13 @@ function delete_account() {
     fi
     local result
     result=$(_delete_account_logic "$password")
-    echo "$result" # Display the result from the logic function
+    echo "$result"
     read -p "Tekan Enter untuk kembali ke menu..."
 }
 
 # ════ Fungsi ganti domain ════
 function change_domain() {
-    echo "--- Change Domain ---"
+    echo "一═⌊✦⌉ 𝗚𝗔𝗡𝗧𝗜 𝗗𝗢𝗠𝗔𝗜𝗡 ⌊✦⌉═一"
     read -p "Enter the new domain name for the SSL certificate: " domain
     if [ -z "$domain" ]; then
         echo "Domain name cannot be empty."
@@ -490,9 +502,8 @@ function list_accounts() {
 # ════ Fungsi format daftar akun ════
 function _list_accounts() {
     echo -e "${PURPLE}╔══════════════════════════════════════════╗${NC}"
-    echo -e "${PURPLE}║       ${LIGHT_CYAN}DAFTAR AKUN AKTIF${PURPLE}             ║${NC}"
-    echo -e "${PURPLE}╚══════════════════════════════════════════╝${NC}"
-    echo ""
+    echo -e "${PURPLE}║ ${LIGHT_CYAN}一═⌊✦⌉ 𝗗𝗔𝗙𝗧𝗔𝗥 𝗔𝗞𝗨𝗡 𝗔𝗞𝗧𝗜𝗙 ⌊✦⌉═一${PURPLE} ║${NC}"
+    echo -e "${PURPLE}╚══════════════════════════════════════════╝${NC}"    echo ""
         USER_FILE="/etc/zivpn/users.db"
     if [ ! -f "$USER_FILE" ] || [ ! -s "$USER_FILE" ]; then
         echo -e "${YELLOW}Tidak ada akun ditemukan.${NC}"
@@ -595,7 +606,7 @@ function _draw_info_panel() {
         bw_month="N/A"
     fi
     if [ -f "$LICENSE_INFO_FILE" ]; then
-        source "$LICENSE_INFO_FILE" # Loads CLIENT_NAME
+        source "$LICENSE_INFO_FILE"
         client_name=${CLIENT_NAME:-"Registered"}
     else
         client_name="Registered"
@@ -640,20 +651,20 @@ function _draw_service_status() {
 function create_account() {
     clear
     echo -e "${PURPLE}╔════════════════════════════════════════════════════╗${NC}"
-    echo -e "${PURPLE}║       ${LIGHT_CYAN}CREATE ACCOUNT${PURPLE}                      ║${NC}"
+    echo -e "${PURPLE}║     ${LIGHT_CYAN}一═⌊✦⌉ 𝗖𝗥𝗘𝗔𝗧𝗘 𝗔𝗖𝗖𝗢𝗨𝗡𝗧 ⌊✦⌉═一${PURPLE}       ║${NC}"
     echo -e "${PURPLE}╚════════════════════════════════════════════════════╝${NC}"
+    echo -e "${YELLOW}╔════════════════════════════════════════════════════╗${NC}"
     echo -e "${YELLOW}║                                                    ║${NC}"
-    echo -e "${YELLOW}║   ${RED}1)${NC} ${BOLD_WHITE}Create Zivpn                                  ${YELLOW}║${NC}"
-    echo -e "${YELLOW}║   ${RED}2)${NC} ${BOLD_WHITE}Trial Zivpn                                   ${YELLOW}║${NC}"
-    echo -e "${YELLOW}║   ${RED}0)${NC} ${BOLD_WHITE}Back to Menu                             ${YELLOW}║${NC}"
+    echo -e "${YELLOW}║     ${RED}1)${NC} ${BOLD_WHITE}Create Zivpn                                 ${YELLOW}║${NC}"
+    echo -e "${YELLOW}║     ${RED}2)${NC} ${BOLD_WHITE}Trial Zivpn                                  ${YELLOW}║${NC}"
+    echo -e "${YELLOW}║     ${RED}0)${NC} ${BOLD_WHITE}Back to Menu                                ${YELLOW}║${NC}"
     echo -e "${YELLOW}║                                                    ║${NC}"
-    echo -e "${YELLOW}╚════════════════════════════════════════════════════╝${NC}"
-    read -p "Enter your choice [0-2]: " choice
+    echo -e "${YELLOW}╚════════════════════════════════════════════════════╝${NC}"    read -p "Pilih option [0-2]: " choice
     case $choice in
         1) create_manual_account ;;
         2) create_trial_account ;;
         0) return ;;
-        *) echo "Invalid option." ;;
+        *) echo "Invalid option" ;;
     esac
 }
 
@@ -661,9 +672,9 @@ function show_menu() {
     clear
     figlet "PONDOK VPN" | lolcat
     echo -e "${PURPLE}╔════════════════════════════════════════════════════╗${NC}"
-    echo -e "${PURPLE}║       ${LIGHT_CYAN}UDP ZIVPN${PURPLE}                                ║${NC}"
-    echo -e "${PURPLE}╚════════════════════════════════════════════════════╝${NC}"
-    _draw_info_panel
+    echo -e "${PURPLE}║     ${LIGHT_CYAN}一═⌊✦⌉ 𝗨𝗗𝗣 𝗭𝗜𝗩𝗣𝗡 𝗣𝗥𝗘𝗠𝗜𝗨𝗠 ⌊✦⌉═一${PURPLE}      ║${NC}"
+    echo -e "${PURPLE}╚════════════════════════════════════════════════════╝${NC}"    _draw_info_panel
+        _draw_info_panel
     _draw_service_status
     echo -e "${YELLOW}║                                                    ║${NC}"
     echo -e "${YELLOW}║   ${RED}1)${NC} ${BOLD_WHITE}Create Account                                ${YELLOW}║${NC}"
@@ -674,7 +685,7 @@ function show_menu() {
     echo -e "${YELLOW}║   ${RED}0)${NC} ${BOLD_WHITE}Exit                                          ${YELLOW}║${NC}"
     echo -e "${YELLOW}║                                                    ║${NC}"
     echo -e "${YELLOW}╚════════════════════════════════════════════════════╝${NC}"
-    read -p "Enter your choice [0-5]: " choice
+    read -p "pilih option [0-5]: " choice
     case $choice in
         1) create_account ;;
         2) renew_account ;;
@@ -682,21 +693,21 @@ function show_menu() {
         4) change_domain ;;
         5) list_accounts ;;
         0) exit 0 ;;
-        *) echo "Invalid option. Please try again." ;;
+        *) echo "Invalid option. silahkan pilih ulang." ;;
     esac
 }
 
 # ════ Fungsi inti ════
 function run_setup() {
     verify_license
-    echo "--- Starting Base Installation ---"
-    wget -O zi.sh https://raw.githubusercontent.com/USER_SAYA/REPO_SAYA/main/zi.sh
+    echo "═[ Starting Base Installation ]═"
+    wget -O zi.sh https://raw.githubusercontent.com/Pondok-Vpn/pondokvip/main/zi.sh
     if [ $? -ne 0 ]; then echo "Failed to download base installer. Aborting."; exit 1; fi
     chmod +x zi.sh
     ./zi.sh
     if [ $? -ne 0 ]; then echo "Base installation script failed. Aborting."; exit 1; fi
     rm zi.sh
-    echo "--- Base Installation Complete ---"
+    echo "═[ Base Installation Complete ]═"
     echo "--- Setting up Advanced Management ---"
     if ! command -v jq &> /dev/null || ! command -v curl &> /dev/null || ! command -v zip &> /dev/null || ! command -v figlet &> /dev/null || ! command -v lolcat &> /dev/null || ! command -v vnstat &> /dev/null; then
         echo "Installing dependencies (jq, curl, zip, figlet, lolcat, vnstat)..."
@@ -763,7 +774,7 @@ EOF
     (crontab -l 2>/dev/null; echo "$CRON_JOB_EXPIRY") | crontab -
     echo "Skipping license checker setup (expiry check disabled)."
     restart_zivpn
-    echo "--- Setting up REST API Service ---"
+    echo "--- Setting Up REST API Service ---"
     if ! command -v node &> /dev/null; then
         echo "Node.js not found. Installing Node.js v18..."
         curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
@@ -869,7 +880,7 @@ EOF
     echo "Opening firewall port 5888 for API..."
     iptables -I INPUT -p tcp --dport 5888 -j ACCEPT
     echo "--- API Setup Complete ---"
-    echo "--- Integrating management script into the system ---"
+    echo "--- Integrating management script into the system ---" # BY : PONDOKVPN
     cp "$0" /usr/local/bin/zivpn-manager
     chmod +x /usr/local/bin/zivpn-manager
     PROFILE_FILE="/root/.bashrc"
@@ -918,7 +929,7 @@ function main() {
         show_menu
     done
 }
-
+# 一═✦⌠𝗣𝗢𝗡𝗗𝗢𝗞 𝗩𝗣𝗡⌡✦═一
 if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
     main "$@"
 fi

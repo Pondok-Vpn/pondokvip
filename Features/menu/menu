@@ -380,7 +380,7 @@ case $opt in
     ;;
 10)
     clear
-    zivpn-complete.sh
+    user_zivpn.sh
     ;;
 11)
     clear

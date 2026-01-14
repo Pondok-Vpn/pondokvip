@@ -57,7 +57,7 @@
 - CONTOH VERSI : bash xray.sh v25.1.30
 - reboot
 
-### 一═✦⌠Author⌡✦═一
+### Author:
 
 ### PONDOK VPN
 

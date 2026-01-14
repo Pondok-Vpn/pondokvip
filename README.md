@@ -52,7 +52,7 @@
 <pre><code>curl -O https://raw.githubusercontent.com/bin456789/reinstall/main/reinstall.sh && bash reinstall.sh Ubuntu 24.04 && reboot</code></pre>
 
 ### PILIH VERSI XRAY
-<pre><code>wget https://raw.githubusercontent.com/bowowiwendi/Manage-Xray/refs/heads/main/xray.sh</code></pre>
+<pre><code>wget https://raw.githubusercontent.com/Pondok-Vpn/Manage-Xray/refs/heads/main/xray.sh</code></pre>
 DAFTAR XRAY : bash xray.sh list
 CONTOH VERSI : bash xray.sh v25.1.30
 reboot

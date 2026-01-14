@@ -8,6 +8,9 @@
 
 <!-- Proudly created with GPRM ( https://gprm.itsvg.in ) -->
 
+### TESTED ON OS 
+- UBUNTU 20 ( Recomended )
+- DEBIAN 10 ( Recomended )
 ### UP REPO DEBIAN
 <pre><code>apt update -y && apt upgrade -y && apt dist-upgrade -y && reboot</code></pre>
 ### UP REPO UBUNTU
@@ -20,9 +23,20 @@
 ### PERINTAH UPDATE 
 <pre><code>wget https://raw.githubusercontent.com/Pondok-Vpn/Pondokvip/refs/heads/main/files/update.sh && chmod +x update.sh && ./update.sh</code></pre>
 
-### TESTED ON OS 
-- UBUNTU 20
-- DEBIAN 10 ( Recomended )
+### REBUILD UBUNTU 20.204
+<pre><code>curl -O https://raw.githubusercontent.com/bin456789/reinstall/main/reinstall.sh && bash reinstall.sh ubuntu 20.04 && reboot</code></pre>
+
+### REBUILD DEBIAN 12
+<pre><code>curl -O https://raw.githubusercontent.com/bin456789/reinstall/main/reinstall.sh && bash reinstall.sh Debian 12 && reboot</code></pre>
+
+### REBUILD UBUNTU 24.04
+<pre><code>curl -O https://raw.githubusercontent.com/bin456789/reinstall/main/reinstall.sh && bash reinstall.sh Ubuntu 24.04 && reboot</code></pre>
+
+### PILIH VERSI XRAY
+<pre><code>wget https://raw.githubusercontent.com/Pondok-Vpn/Manage-Xray/refs/heads/main/xray.sh</code></pre>
+- DAFTAR XRAY  : bash xray.sh list
+- CONTOH VERSI : bash xray.sh v25.1.30
+- reboot
 
 ### PORT INFO
 ```
@@ -42,20 +56,6 @@
 - SLOWDNS 5300
 - UDP CUSTOM 1-65535
 ```
-### REBUILD UBUNTU 20.204
-<pre><code>curl -O https://raw.githubusercontent.com/bin456789/reinstall/main/reinstall.sh && bash reinstall.sh ubuntu 20.04 && reboot</code></pre>
-
-### REBUILD DEBIAN 12
-<pre><code>curl -O https://raw.githubusercontent.com/bin456789/reinstall/main/reinstall.sh && bash reinstall.sh Debian 12 && reboot</code></pre>
-
-### REBUILD UBUNTU 24.04
-<pre><code>curl -O https://raw.githubusercontent.com/bin456789/reinstall/main/reinstall.sh && bash reinstall.sh Ubuntu 24.04 && reboot</code></pre>
-
-### PILIH VERSI XRAY
-<pre><code>wget https://raw.githubusercontent.com/Pondok-Vpn/Manage-Xray/refs/heads/main/xray.sh</code></pre>
-- DAFTAR XRAY  : bash xray.sh list
-- CONTOH VERSI : bash xray.sh v25.1.30
-- reboot
 
 ### Author :
 

@@ -53,9 +53,9 @@
 
 ### PILIH VERSI XRAY
 <pre><code>wget https://raw.githubusercontent.com/Pondok-Vpn/Manage-Xray/refs/heads/main/xray.sh</code></pre>
-DAFTAR XRAY : bash xray.sh list
-CONTOH VERSI : bash xray.sh v25.1.30
-reboot
+- DAFTAR XRAY  : bash xray.sh list
+- CONTOH VERSI : bash xray.sh v25.1.30
+- reboot
 
 ### 一═✦⌠Author⌡✦═一
 
